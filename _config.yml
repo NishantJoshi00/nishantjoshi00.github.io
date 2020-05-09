@@ -1,13 +1,13 @@
 
 # Site settings
 title:       Loop's Blog
-email:       ''
-description: ''
+email:       'nishantjo.12@gmail.com'
+description: 'Blog for understanding, with different outlook'
 baseurl:     '' # The subpath of your site, e.g. /blog
 url:         '' # The base hostname & protocol for your site
-twitter:     ''
-github:      ''
-instagram:   ''
+twitter:     'twitter.com/Nishant06394875'
+github:      'github.com/nishantjoshi00'
+instagram:   'instagram.com/nishantjosh'
 facebook:    ''
 
 markdown:  kramdown
