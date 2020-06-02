@@ -1,7 +1,7 @@
 ---
-	layout: post
-	title: Using Tor from Commandline Interface
-	tags: [security, linux, debian, ubuntu, networking]
+layout: post
+title: Using Tor from Commandline Interface
+tags: [security, linux, debian, ubuntu, networking]
 ---
 ## Introduction
 
