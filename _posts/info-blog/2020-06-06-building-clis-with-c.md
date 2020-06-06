@@ -3,7 +3,6 @@ layout: post
 title: Building CLIs with C
 tags: [linux, C, filesystem, CLI]
 ---
-# Building CLIs with C
 
 ## Introduction
 
