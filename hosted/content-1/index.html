@@ -3,46 +3,44 @@
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500&display=swap" rel="stylesheet">
-	<title>Example Site</title>
-	<script src="https://cdn.jsdelivr.net/npm/typeit@7.0.4/dist/typeit.min.js"></script>
-	<style>
-		* {
-			font-family: 'Montserrat', sans-serif;
-		}
-		body {
-			padding: 2em;
-			padding-left: 5em;
-		}
-		#header {
-			margin-bottom: 5em;
-		}
-	</style>
-	
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+	<link href="https://fonts.googleapis.com/css2?family=Krona+One&display=swap" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css2?family=Nunito&display=swap" rel="stylesheet">
+	<title>The WebSite</title>
 </head>
 <body>
-	<h1 id="header"></h1>
-	<p style="text-align: right;" id="simplename"></p>
-
-	<script>
-		let b = undefined;
-			b = new TypeIt("#header", {
-			strings: "Sample Website",
-			speed: 75,
-		}).go();
-		let a = true;
-
-		setInterval(function() {
-			if (b.is("completed") == true && a == true) {
-				b.freeze();
-				new TypeIt("#simplename", {
-					strings: "- Nishant Joshi",
-					speed: 75,
-				}).go();
-				a = false;
-			}
-		}, 1000)
-		
-	</script>
+	<div class="content">
+		<h1>The Website</h1>
+	  <div class="card-deck">
+		<div class="card">
+		  <iframe src="intro.html" class="card-img-top embed-responsive-item" alt="..."></iframe>
+		  <div class="card-body">
+			<h5 class="card-title">Introducton Page</h5>
+			<p class="card-text">This is a longer card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+		  </div>
+		</div>
+		<div class="card">
+		  <iframe src="frames.html" class="card-img-top embed-responsive-item" alt="..."></iframe>
+		  <div class="card-body">
+			<h5 class="card-title">Card title</h5>
+			<p class="card-text">This card has supporting text below as a natural lead-in to additional content.</p>
+		  </div>
+		</div>
+	  </div>
+	</div>
+	<style>
+		h1 {
+			text-align: center;
+			font-family: 'Krona One', sans-serif;
+			padding-top: 1em;
+			padding-bottom: 1em;
+		}
+		body {
+			background-color: rgb(0, 139, 53);
+			padding: 1em;
+			font-family: 'Nunito', sans-serif;
+			
+		}
+	</style>
 </body>
 </html>

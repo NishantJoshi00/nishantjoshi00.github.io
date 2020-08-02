@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500&display=swap" rel="stylesheet">
+	<title>Example Site</title>
+	<script src="https://cdn.jsdelivr.net/npm/typeit@7.0.4/dist/typeit.min.js"></script>
+	<style>
+		* {
+			font-family: 'Montserrat', sans-serif;
+		}
+		body {
+			padding: 2em;
+			padding-left: 5em;
+		}
+		#header {
+			margin-bottom: 5em;
+		}
+	</style>
+	
+</head>
+<body>
+	<h1 id="header"></h1>
+	<p style="text-align: right;" id="simplename"></p>
+
+	<script>
+		let b = undefined;
+			b = new TypeIt("#header", {
+			strings: "Sample Website",
+			speed: 75,
+		}).go();
+		let a = true;
+
+		setInterval(function() {
+			if (b.is("completed") == true && a == true) {
+				b.freeze();
+				new TypeIt("#simplename", {
+					strings: "- Nishant Joshi",
+					speed: 75,
+				}).go();
+				a = false;
+			}
+		}, 1000)
+		
+	</script>
+</body>
+</html>
