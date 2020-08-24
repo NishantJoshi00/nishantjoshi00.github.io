@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Document</title>
+	<link href="https://fonts.googleapis.com/css2?family=Do+Hyeon&display=swap" rel="stylesheet">
+	<style>
+		:root {
+			--br: 2%
+		}
+		.container {
+			font-family: 'Do Hyeon', sans-serif;
+			height: 100%;
+			padding: 1em;
+			font-size: 2em
+			
+		}
+		.second {
+			align-content: center;
+			height: 1em;
+			width: 0;
+			background-color: tomato;
+			text-align: center;
+			margin: .1em;
+			border-radius: var(--br);
+		}
+		.minute {
+			height: 1.2em;
+			width: 0%;
+			background-color: rgb(71, 129, 255);
+			text-align: center;
+			margin: .1em;
+			border-radius: var(--br);
+		}
+		.hour {
+			height: 1.5em;
+			width: 0%;
+			background-color: rgb(99, 255, 71);
+			text-align: center;
+			margin: .1em;
+			border-radius: var(--br);
+		}
+		#time{ 
+			text-align: center;
+		}
+	</style>
+</head>
+<body>
+	
+	<div class="container">
+		<h1>The Clock</h1>
+		<div class="clock">
+			<div id="time">
+				00:00:00
+			</div>
+			<div class="hour">
+				
+			</div>
+			<div class="minute">
+				
+			</div>
+			<div class="second">
+				
+			</div>
+		</div>
+	</div>
+	<script src="anime.min.js"></script>
+	<script src="index.js"></script>
+</body>
+</html>
