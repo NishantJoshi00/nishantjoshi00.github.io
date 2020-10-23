@@ -1,0 +1,63 @@
+:root {
+	overflow: hidden;
+	font-family: 'Nunito', sans-serif;
+}
+
+.container {
+	width: 100vw;
+	height: 100vh;
+	display: flex;
+}
+
+.navbar {
+	flex-grow: 1;
+	background-color: rgb(204, 204, 204);
+}
+.head {
+	
+	padding-left: 2em;
+	font-size: 2em;
+}
+
+.text {
+	padding-left: 2em;
+	font-size: 1.5em;
+}
+
+.link {
+	text-decoration: none;
+	color: black;
+	padding: 1em;
+	font-size: 1em;
+	border: none;
+	border-radius: 1em;
+}
+.link:hover {
+	background-color: sandybrown;
+}
+
+.body {
+	flex-grow: 10;
+	height: 100vh;
+	background-color: cornsilk;
+}
+
+.heading {
+	background-color: darksalmon;
+	margin-left: 1em;
+	margin-right: 1em;
+	border-radius: .5em;
+}
+
+.box {
+	margin: 1em;
+	/* width: 100%; */
+	height: 70vh;
+	border-radius: 0.5em;
+}
+
+.frame {
+	width: 100%;
+	height: 100%;
+	
+}
