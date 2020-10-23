@@ -1,6 +1,10 @@
+// let today = new Date();
+// let seconds = today.getSeconds();
+// let minutes = today.getMinutes();
+// let hours = today.getHours();
 let today = new Date();
 let seconds = today.getSeconds();
-let minutes = today.getMinutes();
+let minute = today.getMinutes();
 let hours = today.getHours();
 
 let ansec = anime({
