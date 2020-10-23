@@ -11,7 +11,7 @@
 
 .navbar {
 	flex-grow: 1;
-	background-color: rgb(204, 204, 204);
+	background-color: rgb(127, 161, 255);
 }
 .head {
 	
@@ -22,6 +22,7 @@
 .text {
 	padding-left: 2em;
 	font-size: 1.5em;
+	margin-bottom: 1em;
 }
 
 .link {
