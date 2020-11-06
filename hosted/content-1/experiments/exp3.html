@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <!-- Meta tags -->
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+  <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport" />
+  <meta name="viewport" content="width=device-width" />
+
+  <title>Form</title>
+  <style>
+  </style>
+
+  <!-- Halfmoon CSS -->
+  <link href="https://cdn.jsdelivr.net/gh/halfmoonui/halfmoon@1.0.4/css/halfmoon.min.css" rel="stylesheet" />
+</head>
+<body class="with-custom-webkit-scrollbars with-custom-css-scrollbars" data-dm-shortcut-enabled="true">
+
+  <div class="page-wrapper">
+    <div class="content-wrapper">
+		<div class="d-flex justify-content-center">
+			<div class="card">
+				<div class="card-title">
+					Student Login
+				</div>
+			<form action="/login" method="POST" class="w-400 mw-full">
+				<div class="form-group">
+					<label for="fullname" class="required">Full Name</label>
+					<input type="text" class="form-control" id="fullname" name="fullname" placeholder="Full name" required="required">
+				</div>
+				<div class="form-group">
+					<label for="email" class="required">Email</label>
+					<input type="text" class="form-control" id="email" name="email" placeholder="Email" required="required">
+				</div>
+				<div class="form-group">
+					<label for="no" class="required">Phone No.</label>
+					<input type="number" class="form-control" id="no" name="no" placeholder="" required="required">
+				</div>
+				<div class="form-group">
+					<label for="rollno" class="required">Roll No.</label>
+					<input type="text" class="form-control" id="rollno" name="rollno" placeholder="Rollno" required="required">
+				</div>
+				
+		
+				<input type="submit" class="btn btn-primary" value="Submit">
+			</form>
+			<hr>
+			<ul>
+				<li>Do not submit any password</li>
+			</ul>
+			</div>
+		</div>
+    </div>
+  </div>
+  <script src="https://cdn.jsdelivr.net/gh/halfmoonui/halfmoon@1.0.4/js/halfmoon.min.js"></script>
+  <script>
+    let msg = ""
+    halfmoon.toggleDarkMode();
+    if (msg != "") {
+      halfmoon.initStickyAlert({
+        content: msg,
+        title: "Alert",
+		alertType: "alert-danger"
+      })
+    }
+  </script>
+</body>
+</html>

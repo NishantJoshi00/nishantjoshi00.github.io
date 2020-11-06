@@ -1,0 +1,68 @@
+:root {
+	font-family: 'Quicksand', sans-serif;
+}
+
+nav {
+	padding: 1em;
+	padding-left: 5em;
+	display: flex;
+}
+nav h1 {
+	font-size: 3em;
+}
+
+.content {
+	display: flex;
+	padding: 2em;
+	padding-left: 20vw;
+}
+
+.content img {
+	height: 20em;
+}
+.content ul {
+	padding-left: 5em;
+	font-size: xx-large;
+}
+ul li {
+	margin-top: .5em;
+	list-style-type: none;
+	padding: 0.5em 1em;
+	border-radius: .5em;
+	transition: .5s;
+	
+}
+
+ul li:hover {
+	background-color: antiquewhite;
+	cursor: pointer;
+	transform: scale(1.2);
+}
+
+
+@media only screen and (max-device-width: 480px) {
+	.content {
+		flex-direction: column;
+		padding: .5em;
+		padding-top: 5em;
+		padding-left: 8vw;
+
+	}
+	nav {
+		display: none;
+		visibility: hidden;
+	}
+	.content img {
+		height: 10em;
+		padding-right: 4em;
+	}
+
+	.content ul {
+		padding-left: .1em;
+		width: 75vw;
+	}
+}
+
+body {
+	background-color: white;
+}
