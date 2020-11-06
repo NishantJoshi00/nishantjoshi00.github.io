@@ -1,0 +1,13 @@
+<?xml version = "1.0" encoding = "UTF-8" standalone = "yes" ?>
+<!DOCTYPE entry [
+   <!ELEMENT entry (subject,year,grade)>
+   <!ELEMENT subject (#PCDATA)>
+   <!ELEMENT year (#PCDATA)>
+   <!ELEMENT grade (#PCDATA)>
+]>
+
+<entry>
+<subject>English</subject>
+<year>FE</year>
+<grade>10</grade>
+</entry>
