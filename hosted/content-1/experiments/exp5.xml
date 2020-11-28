@@ -5,9 +5,20 @@
    <!ELEMENT year (#PCDATA)>
    <!ELEMENT grade (#PCDATA)>
 ]>
-
-<entry>
-<subject>English</subject>
-<year>FE</year>
-<grade>10</grade>
-</entry>
+<database>
+   <entry>
+      <subject>English</subject>
+      <year>FE</year>
+      <grade>10</grade>
+   </entry>
+   <entry>
+      <subject>Marathi</subject>
+      <year>FE</year>
+      <grade>20</grade>
+   </entry>
+   <entry>
+      <subject>French</subject>
+      <year>FE</year>
+      <grade>1</grade>
+   </entry>
+</database>
