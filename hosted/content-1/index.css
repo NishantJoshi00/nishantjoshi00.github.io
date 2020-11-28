@@ -12,6 +12,7 @@
 .navbar {
 	flex-grow: 1;
 	background-color: rgb(127, 161, 255);
+	overflow-y: scroll;
 }
 .head {
 	
