@@ -1,0 +1,58 @@
+html, body {
+	font-family: 'Nunito', sans-serif;
+    height:100%;
+    width:100%;
+    margin:0;
+    padding:0;
+}
+
+.content {
+	width: 100%;
+	height: 100%;
+}
+
+.upper {
+	width: 100%;
+	height: 80%;
+	background-color: black;
+	display: flex;
+}
+
+.lower {
+	width: 100%;
+	height: 20%;
+	background-color: rgb(0, 170, 0);
+}
+
+.thumb {
+	height: 100%;
+	background-color: rgb(49, 49, 49);
+	background-size: cover;
+}
+
+.detail {
+	height: 100%;
+	padding: 5vh;
+	margin-left: 10vh;
+}
+
+#status {
+	width: 35vh;
+	color: tomato;
+}
+#song-name {
+	color: white;
+	margin: 5vh;
+	font-size: 10vh;
+	overflow-x: hidden;
+	width: 100%;
+}
+
+.playing {
+	width: 100%;
+	margin: 10vh;
+	display: flex;
+	flex-wrap: wrap;
+	align-content: center;
+	justify-content: center;
+}
