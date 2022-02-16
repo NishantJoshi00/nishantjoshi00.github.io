@@ -8,6 +8,10 @@ function create_words() {
         // Begin accessing JSON data here
         let data = JSON.parse(this.response);
         if (request.status >= 200 && request.status < 400) {
+            let words = document.getElementById("show-list");
+            while (words.firstChild) {
+                words.removeChild(words.firstChild);
+            }
             data.forEach(word => {
                 let div = document.createElement("div");
                 div.className = "list-group-item";
