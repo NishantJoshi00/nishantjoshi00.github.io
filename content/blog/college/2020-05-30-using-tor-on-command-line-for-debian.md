@@ -1,6 +1,5 @@
 +++
 layout = "post"
-draft = true
 title = "Using Tor from Commandline Interface"
 [taxonomies]
     tags = ["security", "linux", "debian", "ubuntu", "networking"]

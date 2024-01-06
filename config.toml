@@ -36,7 +36,7 @@ highlight_theme = "gruvbox-dark"
 
 [extra]
 author = "Nishant"
-display_author = true
+display_author = false
 
 favicon = "favicon.ico"
 image = ""
