@@ -1,0 +1,21 @@
+<style>
+  #iframe {
+    width: 100%;
+    height: 100%;
+    border: none;
+    overflow: hidden;
+    margin: 0;
+  }
+  #target {
+    height: 500px;
+    width: 700px;
+    margin: 0;
+  }
+</style>
+<div id="target">
+  <iframe
+    id="iframe"
+    scrolling="no"
+    src="https://nishantjoshi00.github.io/lang-chart?owner={{ owner | urlencode }}&repo={{ repo | urlencode }}"
+  ></iframe>
+</div>

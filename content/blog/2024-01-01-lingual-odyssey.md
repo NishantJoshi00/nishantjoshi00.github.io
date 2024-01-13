@@ -1,6 +1,6 @@
 +++
 layout = "post"
-title = "The Lingual Odyssey"
+title = "Advent of Code: The Lingual Odyssey"
 author = "Nishant Joshi"
 [extra]
     toc = true
@@ -22,14 +22,13 @@ They could be:
 - कार्यात्मक (Functional)
 - பொருள் நோக்கிய (Object Oriented)
 
-But, at the end of the day, I'm pretty sure you could do `1 + 1` in all of them. Or, better yet, write a multi-user concurrent transaction handling system. Then, why do people make such a fuss about which language to learn and how JavaScript is "the next best thing since sliced bread"?
+But, at the end of the day, I'm pretty sure you could do `1 + 1` in all of them. Or, better yet, write a multi-user concurrent transaction handling system. Then, why are people chasing new languages (like **Rust**) and talk about, how JavaScript is "the next best thing since sliced bread"?
 
 But on a serious note, the real advantage of learning new languages isn't just to solve these real-world problems, but to gain a different perspective to think, a different understanding of the moving parts involved, and finally, an innate appreciation towards the problems themselves. "Everything you write will eventually turn to 0s and 1s"; that's true, but the way you express it will not just run on your computers, but also on the minds of the people who see it.
 
-In my search to find this innate appreciation for problems, I set out on a journey, an adventure: [The Adventure of Code](https://adventofcode.com/). But I didn't want it to be like all the general coding challenges out there. So, to spice things up, I planned on using different languages per problem. Don't worry, this isn't a write-up on how I solved the problems, and don't worry, I won't give you any spoilers about them. This is my perspective on how each of the languages that I used and the understanding I gained at the end of each day.
+I set out on a journey, an adventure: [The Adventure of Code](https://adventofcode.com/). But I didn't want it to be like all the general coding challenges out there. So, to spice things up, I planned on using different languages per problem, and to top that I set a self imposed condition that I will only use the languages that I don't already know!
 
-_<sub>PS. <br />Dear Internet,<br /> I would appreciate it if you critique my implementations, but remember I am not claiming that I have learned all the languages, nor am I saying that all the implementations are perfect and can run so fast that they would travel back in time and alter reality. If that were the case, all my code would have magically become better.</sub>_
-<br /><br />
+> _Talk is cheap. Show me the code._ Here you go [github:advent-of-code-2023](https://github.com/NishantJoshi00/advent-of-code-2023)!
 
 The first thought on my mind as any programmer would have had was, "I want to code **Assembly**!", and so I did!
 
@@ -52,13 +51,13 @@ check_numbers:
   ret
 ```
 
-> _Rule #1: A good code is a code that works._
+> _Rule #1: Good code is code that works._
 
-By the time I had completed admiring the horrific beauty of my code, the next imperative language was **COBOL**. I thought COBOL would be easy, and looking back, it probably was. The whole code looked more or less an essay, and of all the languages that I used, this had the most English in it. My guess is, it was used to document and give tasks to interns before computers took over their jobs.
+By the time I had completed admiring the horrific beauty of my code, the next imperative language was **COBOL**. I thought COBOL would be easy, and looking back, it probably was. The whole code looked more or less an essay, and of all the languages that I used, this had the most English in it. My guess is, it was used for documentation or for offloading work to interns.
 
 > _Rule #2: A good code should be easier to read, regardless of the technical background._
 
-While traveling the imperative path, there were a few languages that threw me for a loop (literally in Zig's case). One of them was **Zig**. Maybe it was just me, but working with a language where any allocation had to be hand-wrung from an allocator object felt like walking a memory tightrope. And the worst of it all? I couldn't even build a bridge of coupled recursion with two fallible functions – Zig wouldn't let me! This was completely unexpected, like facing a "no recursion allowed" sign after years of coding freedom. No other language had ever tried to clip my recursion wings – except maybe Rust, but that's a story for another day. The second language that really threw me off was **R**. I've never been more frustrated than when wrestling with R's array constructions and concatenation. Maybe it's just me, but the way everything fit together felt like trying to solve a logic puzzle blindfolded – it just mangled my brain.
+While traveling the imperative path, there were a few languages that threw me for a loop (literally in Zig's case). One of them was **Zig**. Maybe it was just me, but working with a language where any allocation had to be hand-wrung from an allocator object felt like walking a memory tightrope. And the worst of it all? I couldn't even build a bridge of coupled recursion with two fallible functions – Zig wouldn't let me! This was completely unexpected, like facing a "no recursion allowed" sign after years of coding freedom. No other language had ever tried to clip my recursion wings – except maybe Rust, but that's a story for another day. The second language that really threw me off was **R**. I've never been more frustrated than when wrestling with R's array constructions and concatenation. Maybe it's just me, but the way everything fit together felt like trying to solve a rubik's cube blindfolded – it was frustrating...
 
 > _Rule #3: variable names are very important; we don't accept either `c` or `PerformArrayConcatenationWhichMightAlsoHelpInChangingArrayDimensions`, both are equally bad._
 
@@ -66,17 +65,19 @@ There were a lot of good programming languages along the way: **Lua** and **ruby
 
 > _Rule #4: The freedom of telling the computer exactly what to do, has it's downsides. (it's like teaching a child, how to bake a cake). There are 3 outcomes (We get the cake, the house explodes, the child dies)_
 
-As my imperative path reached its end, a new challenge stood poised and waiting—it was finally time to cross the mountains of...
+As my imperative path reached its end, a new challenge awaited—it was finally time to cross the mountains of...
 
 ### Object Oriented Programming
 
-Java was out of the question, that much was certain. I wanted to start pure. But was I truly ready? The challenge loomed before me, a daunting prospect for any introvert—**SmallTalk**. Or at least, so I thought, until I realized it was just a programming language. A purely object-oriented programming language, to be exact.
+Java was out of the question, that much was certain. I wanted to start pure. But was I truly ready? The challenge loomed before me, a daunting prospect for any introvert—**SmallTalk**. Or at least, so I thought, until I realized it was just a programming language. A purely object-oriented programming language, to be precise.
 
-During my research, the concept of a language composed entirely of objects boggled my mind. Then, as I delved into the programming itself, confusion mingled with intrigue as I grappled with the unorthodox dataflow. Yet, beneath it all, excitement stirred. This was unlike anything I'd encountered before. Imagine a language where even conditional statements operate through messages passed between objects, like corrupt politicians slipping bribes under the table to get things done.
+During my research, the concept of a language composed entirely of objects boggled my mind. Then, as I delved into the programming itself, confusion mingled with intrigue as I grappled with the unorthodox dataflow (this sentence literally represents my thoughts from back then). Yet, I was somehow excited. This was unlike anything I'd encountered before. Imagine a language where even conditional statements operate through messages passed between objects, like corrupt politicians slipping bribes under the table to get things done.
 
 > _Rule #5: Having functions doesn't mean everything has to be a functional._
 
 As I scaled the steep mountains of object-oriented programming, I stumbled upon something I'd always dismissed as extremely ancient, weird, and unlikely to cross my path: **PHP**! I'd always envisioned PHP as a relic from the past, a realm of difficulty, gooiness, and utter chaos. But reality proved vastly different. The first PHP code I ever wrote turned out to be remarkably clear, concise, and fully embraced the power of OOP. It was an experience worth remembering, a testament to the age-old wisdom of "not judging a book by its cover."
+
+It might also be the preconceived notion that PHP has a bad language design and will always stay that way. Moreover, it also felt that the language has evolved to be more robust and easy to adapt too. To put it simply, I didn't feel like I was learning a new language, but just using the built-up experience.
 
 > _Rule #6: Let's try to package data, with all the constituent information contained within them._
 
@@ -112,13 +113,17 @@ My journey stretched across countless languages, but these were some of the most
 
 > _Rule #10: no code, is good code._
 
-This was the journey, or at least a glimpse of it, littered with countless obstacles and daunting challenges. Yet, at the end, the sweetness of satisfaction and the fruit of unwavering determination were beyond compare. The real challenge wasn't solving all those problems; it was relentlessly pursuing the challenge itself, heart unwavering, never losing sight of the horizon.
+This was the journey, or at least a glimpse of it, littered with countless obstacles and daunting challenges. Yet, at the end, the sweetness of satisfaction and the fruit of unwavering determination were beyond compare. The real challenge wasn't solving all those problems; but rather, being consistent and not giving up on the principles that I set for myself. (Well! I did solve the last problem in Python, but in my defense, finding eigenvectors for Laplacian matrix would've been hell'a difficult in **BrainFuck**.)
 
-If you are atleast interested in looking over the code, scrutinising it, or just bitching about it. Feel free to check it out here:
+My journey looked something like:
+
+{{ count_code(owner="NishantJoshi00", repo="advent-of-code-2023") }}
+
+If you are interested in scrutinising my code, or just bitching about it. Feel free to check it out here:
 
 - [NishantJoshi00/advent-of-code](https://github.com/NishantJoshi00/advent-of-code-2023)
 
-If you feel, like following me, here are some of my social handes:
+If you feel like following me, here are some of my social handes:
 
 - github.com/[@NishantJoshi](https://github.com/NishantJoshi00)
 - x.com/[@nishantjosh](https://twitter.com/nishantjosh)
