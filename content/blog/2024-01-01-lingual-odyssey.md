@@ -59,7 +59,7 @@ By the time I had completed admiring the horrific beauty of my code, the next im
 
 While traveling the imperative path, there were a few languages that threw me for a loop (literally in Zig's case). One of them was **Zig**. Maybe it was just me, but working with a language where any allocation had to be hand-wrung from an allocator object felt like walking a memory tightrope. And the worst of it all? I couldn't even build a bridge of coupled recursion with two fallible functions – Zig wouldn't let me! This was completely unexpected, like facing a "no recursion allowed" sign after years of coding freedom. No other language had ever tried to clip my recursion wings – except maybe Rust, but that's a story for another day. The second language that really threw me off was **R**. I've never been more frustrated than when wrestling with R's array constructions and concatenation. Maybe it's just me, but the way everything fit together felt like trying to solve a rubik's cube blindfolded – it was frustrating...
 
-> _Rule #3: variable names are very important; we don't accept either `c` or `PerformArrayConcatenationWhichMightAlsoHelpInChangingArrayDimensions`, both are equally bad._
+> _Rule #3: variable names are very important; we don't accept either `c` or `PerformArrayConcatWithVaryingDims`, both are equally bad._
 
 There were a lot of good programming languages along the way: **Lua** and **ruby** with their simplicity and relatability to preconceived notions of programming languages; Fortran and Go with their inherently supported concurrency and robust design; and the free-flowing syntax and maturity of Python and Julia. And then there was CoffeeScript... me trying to curse it would be an insult to the curse words themselves.
 
