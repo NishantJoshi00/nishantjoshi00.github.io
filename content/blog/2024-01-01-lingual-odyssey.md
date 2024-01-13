@@ -123,7 +123,7 @@ If you are interested in scrutinizing my code, or just bitching about it. Feel f
 
 - [NishantJoshi00/advent-of-code](https://github.com/NishantJoshi00/advent-of-code-2023)
 
-If you feel like following me, here are some of my social handes:
+If you feel like following me or sharing your own ideas around advent of code, here are some of my social handes:
 
 - github.com/[@NishantJoshi](https://github.com/NishantJoshi00)
 - x.com/[@nishantjosh](https://twitter.com/nishantjosh)
