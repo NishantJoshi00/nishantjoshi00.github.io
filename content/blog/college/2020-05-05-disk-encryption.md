@@ -1,5 +1,6 @@
 +++
 layout = "post"
+draft = true
 title = "Disk encryption using LUKS"
 [taxonomies]
     tags = ["cryptography", "linux", "filesystem"]
