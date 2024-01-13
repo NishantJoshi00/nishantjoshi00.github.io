@@ -1,7 +1,6 @@
 +++
 layout = "post"
 title = "Building CLIs with C"
-draft = true
 [taxonomies]
     tags = ["linux", "C", "filesystem", "CLI"]
 +++

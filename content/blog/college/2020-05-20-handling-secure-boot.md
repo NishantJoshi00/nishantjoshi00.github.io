@@ -1,5 +1,4 @@
 +++
-draft = true
 layout = "post"
 title = "Handling Secure Boot"
 author = "Nishant Joshi"
