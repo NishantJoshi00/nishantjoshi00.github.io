@@ -5,6 +5,7 @@
     border: none;
     overflow: hidden;
     margin: 0;
+    pointer-events: none !important;
   }
   #target {
     height: 500px;
@@ -16,6 +17,31 @@
   <iframe
     id="iframe"
     scrolling="no"
-    src="https://nishantjoshi00.github.io/lang-chart?owner={{ owner | urlencode }}&repo={{ repo | urlencode }}"
+    src="https://nishantjoshi00.github.io/lang-chart?owner={{ owner | urlencode }}&repo={{ repo | urlencode }}&title={{ ' ' | urlencode }}"
   ></iframe>
 </div>
+<script>
+  function parseColor(color) {
+    var arr = [];
+    color.replace(/[\d+\.]+/g, function (v) {
+      arr.push(parseFloat(v));
+    });
+    return {
+      hex: arr.slice(0, 3).map(toHex).join(""),
+      opacity: arr.length == 4 ? arr[3] : 1,
+    };
+  }
+  function toHex(int) {
+    var hex = int.toString(16);
+    return hex.length == 1 ? "0" + hex : hex;
+  }
+
+  const changer = () => {
+    const color = window.getComputedStyle(document.body).background;
+    console.log(color);
+    console.log(parseColor(color));
+    document.getElementById("iframe").src +=
+      "&color=" + parseColor(color)["hex"];
+  };
+  document.addEventListener("DOMContentLoaded", changer);
+</script>

@@ -14,7 +14,7 @@ author = "Nishant Joshi"
 
 In reality, we often convey our thoughts through languages. Each language has its own nuances, character set, grammar, and unique expression. But at the end of the day, all these languages share a singular purpose: to provide a means of communicating our thoughts and navigating the complexities of a system we call society.
 
-To provide us with a way to convay our thoughts, and to solve a very complex problem we called communication, in a very complex system we call society. Computers aren't very different in that regard. Though there might be a variety of programming languages out there, at the heart of it, they are all aimed to solve problems.
+To provide us with a way to convey our thoughts, and to solve a very complex problem we called communication, in a very complex system we call society. Computers aren't very different in that regard. Though there might be a variety of programming languages out there, at the heart of it, they are all aimed to solve problems.
 
 They could be:
 
@@ -22,7 +22,7 @@ They could be:
 - कार्यात्मक (Functional)
 - பொருள் நோக்கிய (Object Oriented)
 
-But, at the end of the day, I'm pretty sure you could do `1 + 1` in all of them. Or, better yet, write a multi-user concurrent transaction handling system. Then, why are people chasing new languages (like **Rust**) and talk about, how JavaScript is "the next best thing since sliced bread"?
+But, at the end of the day, I'm pretty sure you could do `1 + 1` in all of them. Or, better yet, write a multi-user concurrent transaction handling system. Then, why are people chasing new languages (like **Rust**) and talk about how JavaScript is "the next best thing since sliced bread"?
 
 But on a serious note, the real advantage of learning new languages isn't just to solve these real-world problems, but to gain a different perspective to think, a different understanding of the moving parts involved, and finally, an innate appreciation towards the problems themselves. "Everything you write will eventually turn to 0s and 1s"; that's true, but the way you express it will not just run on your computers, but also on the minds of the people who see it.
 
@@ -85,7 +85,7 @@ I'd planned to write some Java, but I knew the next best thing—and the final O
 
 Scala presented an interesting language transition. With my experience in Rust, Java, and Python at work, I thought it would be a cinch. But I'm not exactly proud of the code I produced. Still, compared to a few other languages where I'd had to implement preliminary functionality, Scala felt quite comfortable.
 
-> _Rule #7: Commented code, is worst than bad code. (It's similar to gossip, it poisons the mind of both the writer and the reader)._
+> _Rule #7: Awry commented code is worse than bad code. (It's similar to gossip, it poisons the mind of both the writer and the reader)._
 
 Here we are, folks—the final path in this grand journey. It's time to dive into the river of...
 
@@ -99,9 +99,9 @@ But to a larger extent, these languages were very well built, and I was finally 
 
 - [x] Being Functional
 - [x] Solve My Problems
-- [x] Maximize Reusibility
+- [x] Maximize Reusability
 
-And before you start saying every language, is reusable, sure, "If you can read assembly, everything is open source," but who has time for that? I crave languages that embrace reusability from the start. OCaml delivered in a big way. Don't believe me? Witness the magic...
+And before you start saying every language is reusable, sure, "If you can read assembly, everything is open source," but who has time for that? I crave languages that embrace reusability from the start. OCaml delivered in a big way. Don't believe me? Witness the magic...
 
 {{ x(name="lingual-odyssey") }}
 
@@ -119,7 +119,7 @@ My journey looked something like:
 
 {{ count_code(owner="NishantJoshi00", repo="advent-of-code-2023") }}
 
-If you are interested in scrutinising my code, or just bitching about it. Feel free to check it out here:
+If you are interested in scrutinizing my code, or just bitching about it. Feel free to check it out here:
 
 - [NishantJoshi00/advent-of-code](https://github.com/NishantJoshi00/advent-of-code-2023)
 
@@ -129,4 +129,4 @@ If you feel like following me, here are some of my social handes:
 - x.com/[@nishantjosh](https://twitter.com/nishantjosh)
 - linkedin.com/[@joshi-nishant](https://www.linkedin.com/in/joshi-nishant/)
 
-If you are reached this far, it was valiant enough just to read though this whole mess. But remember what Kakashi said, "In society, those who don't have many ablities tend to complain more."
+If you are reached this far, it was valiant enough just to read through this whole mess. But remember what Kakashi said, "In society, those who don't have many abilities tend to complain more."
