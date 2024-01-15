@@ -173,7 +173,7 @@ This was the journey, or at least a glimpse of it, littered with countless obsta
 
 <br/>
 
-If you are interested in scrutinizing my code, or just bitching about it. Feel free to check it out here:
+If you are interested in scrutinizing my code, or wish to talk smack about it. Feel free to check it out here:
 
 - [NishantJoshi00/advent-of-code](https://github.com/NishantJoshi00/advent-of-code-2023)
 
@@ -181,6 +181,5 @@ If you feel like following me or sharing your own ideas around the advent of cod
 
 - github.com/[@NishantJoshi](https://github.com/NishantJoshi00)
 - x.com/[@nishantjosh](https://twitter.com/nishantjosh)
-- linkedin.com/[@joshi-nishant](https://www.linkedin.com/in/joshi-nishant/)
 
 If you have reached this far, it was valiant enough just to read through this whole mess. But remember what Kakashi said, "In society, those who don't have many abilities tend to complain more."
