@@ -10,13 +10,13 @@ author = "Nishant Joshi"
 
 ---
 
-> _The limit of my language mean the limit of my world._
+> _The limit of my language means the limit of my world._
 
 <br/>
 
 In reality, we often convey our thoughts through languages. Each language has its own nuances, character set, grammar, and unique expression. But at the end of the day, all these languages share a singular purpose: to provide a means of communicating our thoughts and navigating the complexities of a system we call society.
 
-To provide us with a way to convey our thoughts, and to solve a very complex problem we called communication, in a very complex system we call society. Computers aren't very different in that regard. Though there might be a variety of programming languages out there, at the heart of it, they are all aimed to solve problems.
+To provide us with a way to convey our thoughts, and to solve a very complex problem we call communication, in a very complex system we call society. Computers aren't very different in that regard. Though there might be a variety of programming languages out there, at the heart of it, they are all aimed at solving problems.
 
 They could be:
 
@@ -26,11 +26,11 @@ They could be:
 
 <br/>
 
-But, at the end of the day, I'm pretty sure you could do `1 + 1` in all of them. Or, better yet, write a multi-user concurrent transaction handling system. Then, why are people chasing new languages (like **Rust**) and talk about how JavaScript is "the next best thing since sliced bread"?
+But, at the end of the day, I'm pretty sure you could do `1 + 1` in all of them. Or, better yet, write a multi-user concurrent transaction handling system. Then, why are people chasing new languages (like **Rust**) and talking about how JavaScript is "the next best thing since sliced bread"?
 
 But on a serious note, the real advantage of learning new languages isn't just to solve these real-world problems, but to gain a different perspective to think, a different understanding of the moving parts involved, and finally, an innate appreciation towards the problems themselves. "Everything you write will eventually turn to 0s and 1s"; that's true, but the way you express it will not just run on your computers, but also on the minds of the people who see it.
 
-I set out on a journey, an adventure: [The Adventure of Code](https://adventofcode.com/). But I didn't want it to be like all the general coding challenges out there. So, to spice things up, I planned on using different languages per problem, and to top that I set a self imposed condition that I will only use the languages that I don't already know!
+I set out on a journey, an adventure: [The Adventure of Code](https://adventofcode.com/). But I didn't want it to be like all the general coding challenges out there. So, to spice things up, I planned on using different languages per problem, and to top that I set a self-imposed condition that I will only use the languages that I don't already know!
 
 <br/>
 
@@ -44,7 +44,7 @@ The first thought on my mind as any programmer would have had was, "I want to co
 
 ## Imperative Programming
 
-How bad can it be to try and solve a complete problem in what I would call a purely Imperative Language? And believe me, it was hard. After finding a handful of instructions that would help me solve the problem and 4 hours of head-scratching and giving up a couple of times, I was finally able to solve the first part of the problem. But guess what? There was a second part to the problem that required me to do string lookup. My frustrated soul couldn't handle implementing a hashmap for this, so I did the most imperative thing possible, and though ugly, it worked.
+How bad can it be to try and solve a complete problem in what I would call a purely Imperative Language? And believe me, it was hard. After finding a handful of instructions that would help me solve the problem and 4 hours of head-scratching and giving up a couple of times, I was finally able to solve the first part of the problem. But guess what? There was a second part to the problem that required me to do a string lookup. My frustrated soul couldn't handle implementing a hashmap for this, so I did the most imperative thing possible, and though ugly, it worked.
 
 ```asm
 check_numbers:
@@ -67,7 +67,7 @@ check_numbers:
 
 <br/>
 
-By the time I had completed admiring the horrific beauty of my code, the next imperative language was **COBOL**. I thought COBOL would be easy, and looking back, it probably was. The whole code looked more or less an essay, and of all the languages that I used, this had the most English in it. My guess is, it was used for documentation or for offloading work to interns.
+By the time I had completed admiring the horrific beauty of my code, the next imperative language was **COBOL**. I thought COBOL would be easy, and looking back, it probably was. The whole code looked more or less like an essay, and of all the languages that I used, this had the most English in it. My guess is, it was used for documentation or offloading work to interns.
 
 <br/>
 
@@ -75,7 +75,7 @@ By the time I had completed admiring the horrific beauty of my code, the next im
 
 <br/>
 
-While traveling the imperative path, there were a few languages that threw me for a loop (literally in Zig's case). One of them was **Zig**. Maybe it was just me, but working with a language where any allocation had to be hand-wrung from an allocator object felt like walking a memory tightrope. And the worst of it all? I couldn't even build a bridge of coupled recursion with two fallible functions – Zig wouldn't let me! This was completely unexpected, like facing a "no recursion allowed" sign after years of coding freedom. No other language had ever tried to clip my recursion wings – except maybe Rust, but that's a story for another day. The second language that really threw me off was **R**. I've never been more frustrated than when wrestling with R's array constructions and concatenation. Maybe it's just me, but the way everything fit together felt like trying to solve a rubik's cube blindfolded – it was frustrating...
+While traveling the imperative path, there were a few languages that threw me for a loop (literally in Zig's case). One of them was **Zig**. Maybe it was just me, but working with a language where any allocation had to be hand-wrung from an allocator object felt like walking a memory tightrope. And the worst of it all? I couldn't even build a bridge of coupled recursion with two fallible functions – Zig wouldn't let me! This was completely unexpected, like facing a "no recursion allowed" sign after years of coding freedom. No other language had ever tried to clip my recursion wings – except maybe Rust, but that's a story for another day. The second language that really threw me off was **R**. I've never been more frustrated than when wrestling with R's array constructions and concatenation. Maybe it's just me, but the way everything fit together felt like trying to solve a Rubik's cube blindfolded – it was frustrating...
 
 <br/>
 
@@ -87,7 +87,7 @@ There were a lot of good programming languages along the way: **Lua** and **ruby
 
 <br/>
 
-> _Rule #4: The freedom of telling the computer exactly what to do, has it's downsides. (it's like teaching a child, how to bake a cake). There are 3 outcomes (We get the cake, the house explodes, the child dies)_
+> _Rule #4: The freedom of telling the computer exactly what to do, has its downsides. (it's like teaching a child, how to bake a cake). There are 3 outcomes (We get the cake, the house explodes, the child dies)_
 
 <br/>
 
@@ -95,21 +95,21 @@ As my imperative path reached its end, a new challenge awaited—it was finally 
 
 <br/>
 
-## Object Oriented Programming
+## Object-Oriented Programming
 
-Java was out of the question, that much was certain. I wanted to start pure. But was I truly ready? The challenge loomed before me, a daunting prospect for any introvert—**SmallTalk**. Or at least, so I thought, until I realized it was just a programming language. A purely object-oriented programming language, to be precise.
+Java was out of the question, that much was certain. I wanted to start pure. But was I truly ready? The challenge loomed before me, a daunting prospect for any introvert—**SmallTalk**. Or at least, so I thought until I realized it was just a programming language. A purely object-oriented programming language, to be precise.
 
-During my research, the concept of a language composed entirely of objects boggled my mind. Then, as I delved into the programming itself, confusion mingled with intrigue as I grappled with the unorthodox dataflow (this sentence literally represents my thoughts from back then). Yet, I was somehow excited. This was unlike anything I'd encountered before. Imagine a language where even conditional statements operate through messages passed between objects, like corrupt politicians slipping bribes under the table to get things done.
+During my research, the concept of a language composed entirely of objects boggled my mind. Then, as I delved into the programming itself, confusion mingled with intrigue as I grappled with the unorthodox dataflow (this sentence literally represents my thoughts from back then). Yet, I was somehow excited. This was unlike anything I'd encountered before. Imagine a language where even conditional statements operate through messages passed between objects like corrupt politicians slipping bribes under the table to get things done.
 
 <br/>
 
-> _Rule #5: Having functions doesn't mean everything has to be a functional._
+> _Rule #5: Having functions doesn't mean everything has to be functional._
 
 <br/>
 
 As I scaled the steep mountains of object-oriented programming, I stumbled upon something I'd always dismissed as extremely ancient, weird, and unlikely to cross my path: **PHP**! I'd always envisioned PHP as a relic from the past, a realm of difficulty, gooiness, and utter chaos. But reality proved vastly different. The first PHP code I ever wrote turned out to be remarkably clear, concise, and fully embraced the power of OOP. It was an experience worth remembering, a testament to the age-old wisdom of "not judging a book by its cover."
 
-It might also be the preconceived notion that PHP has a bad language design and will always stay that way. Moreover, it also felt that the language has evolved to be more robust and easy to adapt too. To put it simply, I didn't feel like I was learning a new language, but just using the built-up experience.
+It might also be the preconceived notion that PHP has a bad language design and will always stay that way. Moreover, it also felt that the language has evolved to be more robust and easy to adapt to. To put it simply, I didn't feel like I was learning a new language, but just using the built-up experience.
 
 <br/>
 
@@ -137,11 +137,11 @@ And what better way to start than pure? It's time to pull out the big guns: **Ha
 
 <br/>
 
-> _Rule #8: Let's face it, "with more power comes more responsibility"._
+> _Rule #8: Let's face it, "with great power comes great responsibility"._
 
 <br/>
 
-But to a larger extent, these languages were very well built, and I was finally getting some much-needed help from my editor. In nearly all of the previous languages, either there wasn't an LSP or it was quite time-consuming to set one up. In this challenge, out of all the functional programming languages I used, I found **Ocaml** to be truly exceptional at fulfilling its purpose.
+But to a larger extent, these languages were very well-built, and I was finally getting some much-needed help from my editor. In nearly all of the previous languages, either there wasn't an LSP or it was quite time-consuming to set one up. In this challenge, out of all the functional programming languages I used, I found **Ocaml** to be truly exceptional at fulfilling its purpose.
 
 - [x] Being Functional
 - [x] Solve My Problems
@@ -155,7 +155,7 @@ And before you start saying every language is reusable, sure, "If you can read a
 
 <br/>
 
-> _Rule #9: Code should improves re-usability and facilitate easy refactoring for future code modifications._
+> _Rule #9: Code should improve re-usability and facilitate easy refactoring for future code modifications._
 
 <br/>
 
@@ -167,7 +167,7 @@ My journey stretched across countless languages, but these were some of the most
 
 <br/>
 
-This was the journey, or at least a glimpse of it, littered with countless obstacles and daunting challenges. Yet, at the end, the sweetness of satisfaction and the fruit of unwavering determination were beyond compare. The real challenge wasn't solving all those problems; but rather, being consistent and not giving up on the principles that I set for myself. (Well! I did solve the last problem in Python, but in my defense, finding eigenvectors for Laplacian matrix would've been hell'a difficult in **BrainFuck**.)
+This was the journey, or at least a glimpse of it, littered with countless obstacles and daunting challenges. Yet, at the end, the sweetness of satisfaction and the fruit of unwavering determination were beyond compare. The real challenge wasn't solving all those problems; but rather, being consistent and not giving up on the principles that I set for myself. (Well! I did solve the last problem in Python, but in my defense, finding eigenvectors for Laplacian matrix would've been hella difficult in **BrainFuck**.)
 
 {{ count_code(owner="NishantJoshi00", repo="advent-of-code-2023") }}
 
@@ -177,10 +177,10 @@ If you are interested in scrutinizing my code, or just bitching about it. Feel f
 
 - [NishantJoshi00/advent-of-code](https://github.com/NishantJoshi00/advent-of-code-2023)
 
-If you feel like following me or sharing your own ideas around advent of code, here are some of my social handes:
+If you feel like following me or sharing your own ideas around the advent of code, here are some of my social media handles:
 
 - github.com/[@NishantJoshi](https://github.com/NishantJoshi00)
 - x.com/[@nishantjosh](https://twitter.com/nishantjosh)
 - linkedin.com/[@joshi-nishant](https://www.linkedin.com/in/joshi-nishant/)
 
-If you are reached this far, it was valiant enough just to read through this whole mess. But remember what Kakashi said, "In society, those who don't have many abilities tend to complain more."
+If you have reached this far, it was valiant enough just to read through this whole mess. But remember what Kakashi said, "In society, those who don't have many abilities tend to complain more."
