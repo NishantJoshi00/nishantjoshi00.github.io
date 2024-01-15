@@ -69,7 +69,7 @@ html {
 
 body {
   font-family: monospace;
-  font-size: 1.25rem;
+  font-size: 1.8rem;
   line-height: 1.35;
   max-width: 100rem;
   margin: auto;
@@ -347,5 +347,8 @@ textarea {
 @media (max-width: 650px) {
   .wrapper {
     margin: 1rem;
+  }
+  body {
+    font-size: 1.25rem;
   }
 }
