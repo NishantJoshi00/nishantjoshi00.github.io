@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en">
+    <title> - networking</title>
+    <link href="https://nishantjoshi00.github.io/tags/networking/atom.xml" rel="self" type="application/atom+xml"/>
+    <link href="https://nishantjoshi00.github.io"/>
+    <generator uri="https://www.getzola.org/">Zola</generator>
+    <updated>2020-05-30T00:00:00+00:00</updated>
+    <id>https://nishantjoshi00.github.io/tags/networking/atom.xml</id>
+    <entry xml:lang="en">
+        <title>Using Tor from Commandline Interface</title>
+        <published>2020-05-30T00:00:00+00:00</published>
+        <updated>2020-05-30T00:00:00+00:00</updated>
+        <author>
+          <name>Unknown</name>
+        </author>
+        <link rel="alternate" href="https://nishantjoshi00.github.io/blog/college/using-tor-on-command-line-for-debian/" type="text/html"/>
+        <id>https://nishantjoshi00.github.io/blog/college/using-tor-on-command-line-for-debian/</id>
+        
+        <content type="html">&lt;h2 id=&quot;introduction&quot;&gt;Introduction&lt;&#x2F;h2&gt;
+&lt;h3 id=&quot;what-is-tor&quot;&gt;What is Tor ??&lt;&#x2F;h3&gt;
+&lt;p&gt;Tor is a network that is used to provide higher security that any existing VPN by enveloping your data into multiple security layers which renders the source untrackable.&lt;&#x2F;p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Unless you share your location to the website you wish to visit or Google&lt;&#x2F;p&gt;
+&lt;&#x2F;blockquote&gt;
+&lt;h3 id=&quot;why-from-command-line&quot;&gt;Why from Command Line ??&lt;&#x2F;h3&gt;
+&lt;p&gt;Basically because it is fun, but also most of the work you would do, ends up done on the terminal in linux, like i have a habit of opening firefox using&lt;&#x2F;p&gt;
+&lt;p&gt;&lt;code&gt;$ firefox &amp;amp;&amp;gt;&#x2F;dev&#x2F;null &amp;amp;&lt;&#x2F;code&gt; instead of clicking on the icon. But other than that when your are trying to access a API locally and would like to prevent the API from knowing your location. Even trying to learn pentesting it is usually done on CLI and its better to be safe from how you are going to expose your system to the internet in such cases.&lt;&#x2F;p&gt;
+&lt;h3 id=&quot;why-debian&quot;&gt;Why Debian ??&lt;&#x2F;h3&gt;
+&lt;p&gt;Firstly, due to experience I know that it would definitely work on Debian&lt;&#x2F;p&gt;
+&lt;p&gt;Secondly, I am also sure that it would work on any other linux distribution, the only changes would be to use the proper package manager. But i have not tried it on any other operating system and thus cannot validate it.&lt;&#x2F;p&gt;
+&lt;h2 id=&quot;installation&quot;&gt;Installation&lt;&#x2F;h2&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;For Debian users &lt;code&gt;apt install tor&lt;&#x2F;code&gt; will do the trick.&lt;&#x2F;p&gt;
+&lt;&#x2F;li&gt;
+&lt;li&gt;
+&lt;p&gt;It you are more interested in getting your hands dirty. Follow the process given below to install tor manually&lt;&#x2F;p&gt;
+&lt;p&gt;First download the source code for tor from their official website, or &lt;a rel=&quot;noopener&quot; target=&quot;_blank&quot; href=&quot;https:&#x2F;&#x2F;2019.www.torproject.org&#x2F;download&#x2F;download.html.en&quot;&gt;click here&lt;&#x2F;a&gt;&lt;&#x2F;p&gt;
+&lt;p&gt;Then open a terminal in the directory where it is placed and start getting your hands dirty&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;bash&quot; style=&quot;background-color:#282828;color:#fdf4c1aa;&quot; class=&quot;language-bash &quot;&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span style=&quot;font-style:italic;color:#928374;&quot;&gt;# For this to work you need tar install which is usually present
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#fdf4c1;&quot;&gt;tar -xzf tor-0.X.Y.Z.W.tar.gz
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#fabd2f;&quot;&gt;cd&lt;&#x2F;span&gt;&lt;span style=&quot;color:#fdf4c1;&quot;&gt; tor-0.X.Y.Z.W
+&lt;&#x2F;span&gt;&lt;span style=&quot;font-style:italic;color:#928374;&quot;&gt;# Here your would require some extra libries to make the configuration of the source successful, that are openssl and zlib or just run:
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#fdf4c1;&quot;&gt;sudo apt-get install libssl-dev
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#fdf4c1;&quot;&gt;sudo apt-get install zlib1g
+&lt;&#x2F;span&gt;&lt;span style=&quot;font-style:italic;color:#928374;&quot;&gt;# Then comes the fun part
+&lt;&#x2F;span&gt;&lt;span style=&quot;font-style:italic;color:#928374;&quot;&gt;# For this step you need gcc installed
+&lt;&#x2F;span&gt;&lt;span style=&quot;font-style:italic;color:#928374;&quot;&gt;# -------------------
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#fdf4c1;&quot;&gt;sudo apt-get install gcc
+&lt;&#x2F;span&gt;&lt;span style=&quot;font-style:italic;color:#928374;&quot;&gt;# -------------------
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#fdf4c1;&quot;&gt;.&#x2F;configure
+&lt;&#x2F;span&gt;&lt;span style=&quot;font-style:italic;color:#928374;&quot;&gt;# This looks a lot like cool hacking stuff we see on movies
+&lt;&#x2F;span&gt;&lt;span style=&quot;font-style:italic;color:#928374;&quot;&gt;# Then just run make
+&lt;&#x2F;span&gt;&lt;span style=&quot;font-style:italic;color:#928374;&quot;&gt;# -----------------
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#fdf4c1;&quot;&gt;sudo apt-get install make
+&lt;&#x2F;span&gt;&lt;span style=&quot;font-style:italic;color:#928374;&quot;&gt;# -----------------
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#fdf4c1;&quot;&gt;sudo make &lt;&#x2F;span&gt;&lt;span style=&quot;color:#fe8019;&quot;&gt;&amp;amp;&amp;amp; &lt;&#x2F;span&gt;&lt;span style=&quot;color:#fdf4c1;&quot;&gt;sudo make install
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;h2 id=&quot;application&quot;&gt;Application&lt;&#x2F;h2&gt;
+&lt;p&gt;To make your terminal torrifed you can use either of two things &lt;strong&gt;torsocks&lt;&#x2F;strong&gt;, &lt;strong&gt;socat&lt;&#x2F;strong&gt;&lt;&#x2F;p&gt;
+&lt;p&gt;Here I am going to show how to use torsocks cause it is simple to setup and use&lt;&#x2F;p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;Here you have two choices your could install it directly using &lt;code&gt;apt install torsocks&lt;&#x2F;code&gt;&lt;&#x2F;p&gt;
+&lt;&#x2F;li&gt;
+&lt;li&gt;
+&lt;p&gt;Or get you hands dirty again:&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;bash&quot; style=&quot;background-color:#282828;color:#fdf4c1aa;&quot; class=&quot;language-bash &quot;&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span style=&quot;color:#fdf4c1;&quot;&gt;git clone https:&#x2F;&#x2F;git.torproject.org&#x2F;torsocks.git
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#fabd2f;&quot;&gt;cd&lt;&#x2F;span&gt;&lt;span style=&quot;color:#fdf4c1;&quot;&gt; torsocks
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#fdf4c1;&quot;&gt;.&#x2F;autogen.sh
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#fdf4c1;&quot;&gt;.&#x2F;configure
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#fdf4c1;&quot;&gt;make &lt;&#x2F;span&gt;&lt;span style=&quot;color:#fe8019;&quot;&gt;&amp;amp;&amp;amp; &lt;&#x2F;span&gt;&lt;span style=&quot;color:#fdf4c1;&quot;&gt;make install
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;Here I am not explaining the IN’s &#x2F; OUT’s because well you are smart and you will figure it out.&lt;&#x2F;p&gt;
+&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;h2 id=&quot;getting-started-using-tor&quot;&gt;Getting started using TOR&lt;&#x2F;h2&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;First start the tor service&lt;&#x2F;p&gt;
+&lt;&#x2F;li&gt;
+&lt;li&gt;
+&lt;p&gt;Now then just run : &lt;code&gt;source torsocks on&lt;&#x2F;code&gt;&lt;&#x2F;p&gt;
+&lt;p&gt;and you are good to go.&lt;&#x2F;p&gt;
+&lt;&#x2F;li&gt;
+&lt;li&gt;
+&lt;p&gt;For turning it off run : &lt;code&gt;source torsocks off&lt;&#x2F;code&gt;&lt;&#x2F;p&gt;
+&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+</content>
+        
+    </entry>
+</feed>

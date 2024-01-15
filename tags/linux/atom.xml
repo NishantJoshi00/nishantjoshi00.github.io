@@ -1,0 +1,460 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en">
+    <title> - linux</title>
+    <link href="https://nishantjoshi00.github.io/tags/linux/atom.xml" rel="self" type="application/atom+xml"/>
+    <link href="https://nishantjoshi00.github.io"/>
+    <generator uri="https://www.getzola.org/">Zola</generator>
+    <updated>2020-06-06T00:00:00+00:00</updated>
+    <id>https://nishantjoshi00.github.io/tags/linux/atom.xml</id>
+    <entry xml:lang="en">
+        <title>Building CLIs with C</title>
+        <published>2020-06-06T00:00:00+00:00</published>
+        <updated>2020-06-06T00:00:00+00:00</updated>
+        <author>
+          <name>Unknown</name>
+        </author>
+        <link rel="alternate" href="https://nishantjoshi00.github.io/blog/college/building-clis-with-c/" type="text/html"/>
+        <id>https://nishantjoshi00.github.io/blog/college/building-clis-with-c/</id>
+        
+        <content type="html">&lt;h2 id=&quot;introduction&quot;&gt;Introduction&lt;&#x2F;h2&gt;
+&lt;p&gt;CLI (&lt;strong&gt;C&lt;&#x2F;strong&gt;ommand &lt;strong&gt;L&lt;&#x2F;strong&gt;ine &lt;strong&gt;I&lt;&#x2F;strong&gt;nterface) Application are the programs that we run on our terminal or console. All the linux command we use are CLIs e.g. &lt;code&gt;ls, cat, vim&lt;&#x2F;code&gt; . The programs which uses flags and values to communicate with the inherent program.&lt;&#x2F;p&gt;
+&lt;p&gt;e.g.&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;bash&quot; style=&quot;background-color:#282828;color:#fdf4c1aa;&quot; class=&quot;language-bash &quot;&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span style=&quot;color:#fdf4c1;&quot;&gt;$ ls -l
+&lt;&#x2F;span&gt;&lt;span style=&quot;font-style:italic;color:#928374;&quot;&gt;# This command displays all the files in the current directory in list format (-l : for list format)
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;h2 id=&quot;why-c&quot;&gt;Why C ?&lt;&#x2F;h2&gt;
+&lt;p&gt;Now, why would you use C. For building such applications.&lt;&#x2F;p&gt;
+&lt;ol&gt;
+&lt;li&gt;C is &lt;strong&gt;fast&lt;&#x2F;strong&gt; as compared to other programming languages&lt;&#x2F;li&gt;
+&lt;li&gt;The source code is &lt;strong&gt;obfuscated&lt;&#x2F;strong&gt;.&lt;&#x2F;li&gt;
+&lt;li&gt;C is better &lt;strong&gt;compatible&lt;&#x2F;strong&gt; with the &lt;strong&gt;kernel&lt;&#x2F;strong&gt; and runs seamlessly.&lt;&#x2F;li&gt;
+&lt;&#x2F;ol&gt;
+&lt;h2 id=&quot;implementing-cli-with-c&quot;&gt;Implementing CLI with C&lt;&#x2F;h2&gt;
+&lt;h3 id=&quot;taking-command-line-arguments&quot;&gt;Taking Command Line Arguments&lt;&#x2F;h3&gt;
+&lt;p&gt;In C the command line arguments are taken in the main function as arguments. You might have seen the syntax used somewhere before and are wondering, why it is used&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;c&quot; style=&quot;background-color:#282828;color:#fdf4c1aa;&quot; class=&quot;language-c &quot;&gt;&lt;code class=&quot;language-c&quot; data-lang=&quot;c&quot;&gt;&lt;span style=&quot;color:#fa5c4b;&quot;&gt;int &lt;&#x2F;span&gt;&lt;span style=&quot;color:#8ec07c;&quot;&gt;main&lt;&#x2F;span&gt;&lt;span&gt;(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#fa5c4b;&quot;&gt;int &lt;&#x2F;span&gt;&lt;span style=&quot;color:#fdf4c1;&quot;&gt;argc&lt;&#x2F;span&gt;&lt;span&gt;, &lt;&#x2F;span&gt;&lt;span style=&quot;color:#fa5c4b;&quot;&gt;char&lt;&#x2F;span&gt;&lt;span style=&quot;color:#fe8019;&quot;&gt;* &lt;&#x2F;span&gt;&lt;span style=&quot;color:#fdf4c1;&quot;&gt;argv&lt;&#x2F;span&gt;&lt;span&gt;[]) {}
+&lt;&#x2F;span&gt;&lt;span style=&quot;font-style:italic;color:#928374;&quot;&gt;&#x2F;&#x2F; This could also be void main(int argc, char* argv[]) {}
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;argc&lt;&#x2F;code&gt;: This is the count of arguments provided to the program.&lt;&#x2F;li&gt;
+&lt;li&gt;&lt;code&gt;argv&lt;&#x2F;code&gt;: This is where the arguments are stored in form of character array&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;blockquote&gt;
+&lt;p&gt;The minimum value of argc is always 1. Where the first argument is the actual name of the program that is been run. Thus the real arguments and flags start from index 1 for &lt;code&gt;argv&lt;&#x2F;code&gt;&lt;&#x2F;p&gt;
+&lt;&#x2F;blockquote&gt;
+&lt;p&gt;eg.&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;bash&quot; style=&quot;background-color:#282828;color:#fdf4c1aa;&quot; class=&quot;language-bash &quot;&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span style=&quot;color:#fdf4c1;&quot;&gt;cat &lt;&#x2F;span&gt;&lt;span style=&quot;color:#fe8019;&quot;&gt;&amp;lt;&amp;lt; &lt;&#x2F;span&gt;&lt;span style=&quot;color:#fa5c4b;&quot;&gt;EOF &lt;&#x2F;span&gt;&lt;span style=&quot;color:#fe8019;&quot;&gt;&amp;gt;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#fdf4c1;&quot;&gt; example.c
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#fdf4c1;&quot;&gt;#include &amp;lt;stdio.h&amp;gt;
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#fdf4c1;&quot;&gt;void main(int argc, char* argv[]) {
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#fdf4c1;&quot;&gt;	printf(&amp;quot;argc: %d, argv[0]: %s\n&amp;quot;, argc, argv[0]);
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#fdf4c1;&quot;&gt;}
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#fa5c4b;&quot;&gt;EOF
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#fdf4c1;&quot;&gt;gcc example.c -o example
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#fdf4c1;&quot;&gt;.&#x2F;example
+&lt;&#x2F;span&gt;&lt;span style=&quot;font-style:italic;color:#928374;&quot;&gt;# Output:
+&lt;&#x2F;span&gt;&lt;span style=&quot;font-style:italic;color:#928374;&quot;&gt;# argc: 1, argv[0]: .&#x2F;example
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;Now, you could directly use this knowledge to biuld your command line application, but managing this flags and the value that are passed to the flags becomes difficult after a certain point, for this case C has functions that can be used.&lt;&#x2F;p&gt;
+&lt;h3 id=&quot;using-getopt&quot;&gt;Using &lt;code&gt;getopt()&lt;&#x2F;code&gt;&lt;&#x2F;h3&gt;
+&lt;p&gt;&lt;code&gt;getopt()&lt;&#x2F;code&gt; is a function from &lt;code&gt;unistd.h&lt;&#x2F;code&gt;. This function is used to parse single letter arguments which are followed by hyphen &lt;code&gt;-&lt;&#x2F;code&gt;.&lt;&#x2F;p&gt;
+&lt;p&gt;eg.&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;bash&quot; style=&quot;background-color:#282828;color:#fdf4c1aa;&quot; class=&quot;language-bash &quot;&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span style=&quot;color:#fdf4c1;&quot;&gt;$ ls -la
+&lt;&#x2F;span&gt;&lt;span&gt;	  &lt;&#x2F;span&gt;&lt;span style=&quot;color:#fdf4c1;&quot;&gt;^^
+&lt;&#x2F;span&gt;&lt;span&gt;	  &lt;&#x2F;span&gt;&lt;span style=&quot;color:#fe8019;&quot;&gt;|&lt;&#x2F;span&gt;&lt;span style=&quot;color:#b8bb26;&quot;&gt;\-&lt;&#x2F;span&gt;&lt;span style=&quot;color:#fdf4c1;&quot;&gt;- &lt;&#x2F;span&gt;&lt;span style=&quot;font-style:italic;color:#928374;&quot;&gt;# Here `a` is a flag
+&lt;&#x2F;span&gt;&lt;span&gt;	  &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b8bb26;&quot;&gt;\-&lt;&#x2F;span&gt;&lt;span style=&quot;color:#fdf4c1;&quot;&gt;-- &lt;&#x2F;span&gt;&lt;span style=&quot;font-style:italic;color:#928374;&quot;&gt;# Here `l` is a flag
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;h4 id=&quot;how-to-implement-it&quot;&gt;How to implement it&lt;&#x2F;h4&gt;
+&lt;p&gt;We will take a program for example and then understand how it works&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;c&quot; style=&quot;background-color:#282828;color:#fdf4c1aa;&quot; class=&quot;language-c &quot;&gt;&lt;code class=&quot;language-c&quot; data-lang=&quot;c&quot;&gt;&lt;span style=&quot;color:#fa5c4b;&quot;&gt;#include &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b8bb26;&quot;&gt;&amp;lt;stdio.h&amp;gt;
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#fa5c4b;&quot;&gt;#include &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b8bb26;&quot;&gt;&amp;lt;stdlib.h&amp;gt;
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#fa5c4b;&quot;&gt;#include &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b8bb26;&quot;&gt;&amp;lt;unistd.h&amp;gt;
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#fa5c4b;&quot;&gt;int &lt;&#x2F;span&gt;&lt;span style=&quot;color:#8ec07c;&quot;&gt;main&lt;&#x2F;span&gt;&lt;span&gt;(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#fa5c4b;&quot;&gt;int &lt;&#x2F;span&gt;&lt;span style=&quot;color:#fdf4c1;&quot;&gt;argc&lt;&#x2F;span&gt;&lt;span&gt;, &lt;&#x2F;span&gt;&lt;span style=&quot;color:#fa5c4b;&quot;&gt;char&lt;&#x2F;span&gt;&lt;span style=&quot;color:#fe8019;&quot;&gt;* &lt;&#x2F;span&gt;&lt;span style=&quot;color:#fdf4c1;&quot;&gt;argv&lt;&#x2F;span&gt;&lt;span&gt;[]) {
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#fa5c4b;&quot;&gt;extern char &lt;&#x2F;span&gt;&lt;span style=&quot;color:#fe8019;&quot;&gt;*&lt;&#x2F;span&gt;&lt;span&gt;optarg;
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#fa5c4b;&quot;&gt;extern int&lt;&#x2F;span&gt;&lt;span&gt; optind;
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#fa5c4b;&quot;&gt;int&lt;&#x2F;span&gt;&lt;span&gt; out, err &lt;&#x2F;span&gt;&lt;span style=&quot;color:#fe8019;&quot;&gt;= &lt;&#x2F;span&gt;&lt;span style=&quot;color:#d3869b;&quot;&gt;0&lt;&#x2F;span&gt;&lt;span&gt;;
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#fa5c4b;&quot;&gt;int&lt;&#x2F;span&gt;&lt;span&gt; lflag &lt;&#x2F;span&gt;&lt;span style=&quot;color:#fe8019;&quot;&gt;= &lt;&#x2F;span&gt;&lt;span style=&quot;color:#d3869b;&quot;&gt;0&lt;&#x2F;span&gt;&lt;span&gt;, fflag &lt;&#x2F;span&gt;&lt;span style=&quot;color:#fe8019;&quot;&gt;= &lt;&#x2F;span&gt;&lt;span style=&quot;color:#d3869b;&quot;&gt;0&lt;&#x2F;span&gt;&lt;span&gt;;
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#fa5c4b;&quot;&gt;char &lt;&#x2F;span&gt;&lt;span style=&quot;color:#fe8019;&quot;&gt;*&lt;&#x2F;span&gt;&lt;span&gt;fname;
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#fa5c4b;&quot;&gt;static char&lt;&#x2F;span&gt;&lt;span&gt; usage[] &lt;&#x2F;span&gt;&lt;span style=&quot;color:#fe8019;&quot;&gt;= &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b8bb26;&quot;&gt;&amp;quot;usage: &lt;&#x2F;span&gt;&lt;span style=&quot;color:#fdf4c1;&quot;&gt;%s&lt;&#x2F;span&gt;&lt;span style=&quot;color:#b8bb26;&quot;&gt; [-l] -f fname name\n&amp;quot;&lt;&#x2F;span&gt;&lt;span&gt;;
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#fa5c4b;&quot;&gt;while &lt;&#x2F;span&gt;&lt;span&gt;((out &lt;&#x2F;span&gt;&lt;span style=&quot;color:#fe8019;&quot;&gt;= &lt;&#x2F;span&gt;&lt;span style=&quot;color:#fdf4c1;&quot;&gt;getopt(argc, argv, &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b8bb26;&quot;&gt;&amp;quot;lf:&amp;quot;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#fdf4c1;&quot;&gt;)&lt;&#x2F;span&gt;&lt;span&gt;) &lt;&#x2F;span&gt;&lt;span style=&quot;color:#fe8019;&quot;&gt;!= -&lt;&#x2F;span&gt;&lt;span style=&quot;color:#d3869b;&quot;&gt;1&lt;&#x2F;span&gt;&lt;span&gt;) {
+&lt;&#x2F;span&gt;&lt;span&gt;        &lt;&#x2F;span&gt;&lt;span style=&quot;color:#fa5c4b;&quot;&gt;switch &lt;&#x2F;span&gt;&lt;span&gt;(out) {
+&lt;&#x2F;span&gt;&lt;span&gt;            &lt;&#x2F;span&gt;&lt;span style=&quot;color:#fa5c4b;&quot;&gt;case &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b8bb26;&quot;&gt;&amp;#39;l&amp;#39;&lt;&#x2F;span&gt;&lt;span&gt;:
+&lt;&#x2F;span&gt;&lt;span&gt;                lflag &lt;&#x2F;span&gt;&lt;span style=&quot;color:#fe8019;&quot;&gt;= &lt;&#x2F;span&gt;&lt;span style=&quot;color:#d3869b;&quot;&gt;1&lt;&#x2F;span&gt;&lt;span&gt;;
+&lt;&#x2F;span&gt;&lt;span&gt;                &lt;&#x2F;span&gt;&lt;span style=&quot;color:#fa5c4b;&quot;&gt;break&lt;&#x2F;span&gt;&lt;span&gt;;
+&lt;&#x2F;span&gt;&lt;span&gt;            &lt;&#x2F;span&gt;&lt;span style=&quot;color:#fa5c4b;&quot;&gt;case &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b8bb26;&quot;&gt;&amp;#39;f&amp;#39;&lt;&#x2F;span&gt;&lt;span&gt;:
+&lt;&#x2F;span&gt;&lt;span&gt;                fflag &lt;&#x2F;span&gt;&lt;span style=&quot;color:#fe8019;&quot;&gt;= &lt;&#x2F;span&gt;&lt;span style=&quot;color:#d3869b;&quot;&gt;1&lt;&#x2F;span&gt;&lt;span&gt;;
+&lt;&#x2F;span&gt;&lt;span&gt;                fname &lt;&#x2F;span&gt;&lt;span style=&quot;color:#fe8019;&quot;&gt;=&lt;&#x2F;span&gt;&lt;span&gt; optarg;
+&lt;&#x2F;span&gt;&lt;span&gt;                &lt;&#x2F;span&gt;&lt;span style=&quot;color:#fa5c4b;&quot;&gt;break&lt;&#x2F;span&gt;&lt;span&gt;;
+&lt;&#x2F;span&gt;&lt;span&gt;            &lt;&#x2F;span&gt;&lt;span style=&quot;color:#fa5c4b;&quot;&gt;case &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b8bb26;&quot;&gt;&amp;#39;?&amp;#39;&lt;&#x2F;span&gt;&lt;span&gt;:
+&lt;&#x2F;span&gt;&lt;span&gt;                err &lt;&#x2F;span&gt;&lt;span style=&quot;color:#fe8019;&quot;&gt;= &lt;&#x2F;span&gt;&lt;span style=&quot;color:#d3869b;&quot;&gt;1&lt;&#x2F;span&gt;&lt;span&gt;;
+&lt;&#x2F;span&gt;&lt;span&gt;                &lt;&#x2F;span&gt;&lt;span style=&quot;color:#fa5c4b;&quot;&gt;break&lt;&#x2F;span&gt;&lt;span&gt;;
+&lt;&#x2F;span&gt;&lt;span&gt;        }
+&lt;&#x2F;span&gt;&lt;span&gt;    }
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#fa5c4b;&quot;&gt;if &lt;&#x2F;span&gt;&lt;span&gt;(fflag &lt;&#x2F;span&gt;&lt;span style=&quot;color:#fe8019;&quot;&gt;== &lt;&#x2F;span&gt;&lt;span style=&quot;color:#d3869b;&quot;&gt;0&lt;&#x2F;span&gt;&lt;span&gt;) {
+&lt;&#x2F;span&gt;&lt;span&gt;        &lt;&#x2F;span&gt;&lt;span style=&quot;color:#fabd2f;&quot;&gt;fprintf&lt;&#x2F;span&gt;&lt;span style=&quot;color:#fdf4c1;&quot;&gt;(stderr, &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b8bb26;&quot;&gt;&amp;quot;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#fdf4c1;&quot;&gt;%s&lt;&#x2F;span&gt;&lt;span style=&quot;color:#b8bb26;&quot;&gt;: missing -f option\n&amp;quot;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#fdf4c1;&quot;&gt;, argv[&lt;&#x2F;span&gt;&lt;span style=&quot;color:#d3869b;&quot;&gt;0&lt;&#x2F;span&gt;&lt;span style=&quot;color:#fdf4c1;&quot;&gt;])&lt;&#x2F;span&gt;&lt;span&gt;;
+&lt;&#x2F;span&gt;&lt;span&gt;        &lt;&#x2F;span&gt;&lt;span style=&quot;color:#fabd2f;&quot;&gt;exit&lt;&#x2F;span&gt;&lt;span style=&quot;color:#fdf4c1;&quot;&gt;(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#d3869b;&quot;&gt;1&lt;&#x2F;span&gt;&lt;span style=&quot;color:#fdf4c1;&quot;&gt;)&lt;&#x2F;span&gt;&lt;span&gt;;
+&lt;&#x2F;span&gt;&lt;span&gt;    } &lt;&#x2F;span&gt;&lt;span style=&quot;color:#fa5c4b;&quot;&gt;else if &lt;&#x2F;span&gt;&lt;span&gt;((optind &lt;&#x2F;span&gt;&lt;span style=&quot;color:#fe8019;&quot;&gt;+ &lt;&#x2F;span&gt;&lt;span style=&quot;color:#d3869b;&quot;&gt;1&lt;&#x2F;span&gt;&lt;span&gt;) &lt;&#x2F;span&gt;&lt;span style=&quot;color:#fe8019;&quot;&gt;!=&lt;&#x2F;span&gt;&lt;span&gt; argc) {
+&lt;&#x2F;span&gt;&lt;span&gt;        &lt;&#x2F;span&gt;&lt;span style=&quot;color:#fa5c4b;&quot;&gt;if &lt;&#x2F;span&gt;&lt;span&gt;(optind &lt;&#x2F;span&gt;&lt;span style=&quot;color:#fe8019;&quot;&gt;==&lt;&#x2F;span&gt;&lt;span&gt; argc) &lt;&#x2F;span&gt;&lt;span style=&quot;color:#fabd2f;&quot;&gt;fprintf&lt;&#x2F;span&gt;&lt;span style=&quot;color:#fdf4c1;&quot;&gt;(stderr, &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b8bb26;&quot;&gt;&amp;quot;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#fdf4c1;&quot;&gt;%s&lt;&#x2F;span&gt;&lt;span style=&quot;color:#b8bb26;&quot;&gt;: missing name\n&amp;quot;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#fdf4c1;&quot;&gt;, argv[&lt;&#x2F;span&gt;&lt;span style=&quot;color:#d3869b;&quot;&gt;0&lt;&#x2F;span&gt;&lt;span style=&quot;color:#fdf4c1;&quot;&gt;])&lt;&#x2F;span&gt;&lt;span&gt;;
+&lt;&#x2F;span&gt;&lt;span&gt;        &lt;&#x2F;span&gt;&lt;span style=&quot;color:#fa5c4b;&quot;&gt;else &lt;&#x2F;span&gt;&lt;span style=&quot;color:#fabd2f;&quot;&gt;fprintf&lt;&#x2F;span&gt;&lt;span style=&quot;color:#fdf4c1;&quot;&gt;(stderr, &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b8bb26;&quot;&gt;&amp;quot;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#fdf4c1;&quot;&gt;%s&lt;&#x2F;span&gt;&lt;span style=&quot;color:#b8bb26;&quot;&gt;: more that one name provided\n&amp;quot;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#fdf4c1;&quot;&gt;, argv[&lt;&#x2F;span&gt;&lt;span style=&quot;color:#d3869b;&quot;&gt;0&lt;&#x2F;span&gt;&lt;span style=&quot;color:#fdf4c1;&quot;&gt;])&lt;&#x2F;span&gt;&lt;span&gt;;
+&lt;&#x2F;span&gt;&lt;span&gt;        &lt;&#x2F;span&gt;&lt;span style=&quot;color:#fabd2f;&quot;&gt;fprintf&lt;&#x2F;span&gt;&lt;span style=&quot;color:#fdf4c1;&quot;&gt;(stderr, usage, argv[&lt;&#x2F;span&gt;&lt;span style=&quot;color:#d3869b;&quot;&gt;0&lt;&#x2F;span&gt;&lt;span style=&quot;color:#fdf4c1;&quot;&gt;])&lt;&#x2F;span&gt;&lt;span&gt;;
+&lt;&#x2F;span&gt;&lt;span&gt;        &lt;&#x2F;span&gt;&lt;span style=&quot;color:#fabd2f;&quot;&gt;exit&lt;&#x2F;span&gt;&lt;span style=&quot;color:#fdf4c1;&quot;&gt;(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#d3869b;&quot;&gt;1&lt;&#x2F;span&gt;&lt;span style=&quot;color:#fdf4c1;&quot;&gt;)&lt;&#x2F;span&gt;&lt;span&gt;;
+&lt;&#x2F;span&gt;&lt;span&gt;    } &lt;&#x2F;span&gt;&lt;span style=&quot;color:#fa5c4b;&quot;&gt;else if &lt;&#x2F;span&gt;&lt;span&gt;(err) {
+&lt;&#x2F;span&gt;&lt;span&gt;        &lt;&#x2F;span&gt;&lt;span style=&quot;color:#fabd2f;&quot;&gt;fprintf&lt;&#x2F;span&gt;&lt;span style=&quot;color:#fdf4c1;&quot;&gt;(stderr, usage, argv[&lt;&#x2F;span&gt;&lt;span style=&quot;color:#d3869b;&quot;&gt;0&lt;&#x2F;span&gt;&lt;span style=&quot;color:#fdf4c1;&quot;&gt;])&lt;&#x2F;span&gt;&lt;span&gt;;
+&lt;&#x2F;span&gt;&lt;span&gt;        &lt;&#x2F;span&gt;&lt;span style=&quot;color:#fabd2f;&quot;&gt;exit&lt;&#x2F;span&gt;&lt;span style=&quot;color:#fdf4c1;&quot;&gt;(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#d3869b;&quot;&gt;1&lt;&#x2F;span&gt;&lt;span style=&quot;color:#fdf4c1;&quot;&gt;)&lt;&#x2F;span&gt;&lt;span&gt;;
+&lt;&#x2F;span&gt;&lt;span&gt;    }
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#fa5c4b;&quot;&gt;if &lt;&#x2F;span&gt;&lt;span&gt;(lflag) &lt;&#x2F;span&gt;&lt;span style=&quot;color:#fabd2f;&quot;&gt;printf&lt;&#x2F;span&gt;&lt;span style=&quot;color:#fdf4c1;&quot;&gt;(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#b8bb26;&quot;&gt;&amp;quot;-l was used\n&amp;quot;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#fdf4c1;&quot;&gt;)&lt;&#x2F;span&gt;&lt;span&gt;;
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#fabd2f;&quot;&gt;printf&lt;&#x2F;span&gt;&lt;span style=&quot;color:#fdf4c1;&quot;&gt;(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#b8bb26;&quot;&gt;&amp;quot;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#fdf4c1;&quot;&gt;%s&lt;&#x2F;span&gt;&lt;span style=&quot;color:#b8bb26;&quot;&gt; was provided for -f\n&amp;quot;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#fdf4c1;&quot;&gt;, fname)&lt;&#x2F;span&gt;&lt;span&gt;;
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#fabd2f;&quot;&gt;printf&lt;&#x2F;span&gt;&lt;span style=&quot;color:#fdf4c1;&quot;&gt;(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#b8bb26;&quot;&gt;&amp;quot;name : &lt;&#x2F;span&gt;&lt;span style=&quot;color:#fdf4c1;&quot;&gt;%s&lt;&#x2F;span&gt;&lt;span style=&quot;color:#b8bb26;&quot;&gt;\n&amp;quot;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#fdf4c1;&quot;&gt;, argv[optind])&lt;&#x2F;span&gt;&lt;span&gt;;
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#fa5c4b;&quot;&gt;return &lt;&#x2F;span&gt;&lt;span style=&quot;color:#d3869b;&quot;&gt;0&lt;&#x2F;span&gt;&lt;span&gt;;
+&lt;&#x2F;span&gt;&lt;span&gt;}
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;Above is is a simple example which has a usage line similar to:&lt;&#x2F;p&gt;
+&lt;p&gt;&lt;code&gt;usage: .&#x2F;example [-l] -f fname name&lt;&#x2F;code&gt;&lt;&#x2F;p&gt;
+&lt;p&gt;Where &lt;code&gt;-l&lt;&#x2F;code&gt; is an optional flag, where as -f is compulsary.&lt;&#x2F;p&gt;
+&lt;p&gt;Now, lets understand the code:&lt;&#x2F;p&gt;
+&lt;h4 id=&quot;undestanding-the-code&quot;&gt;Undestanding the code&lt;&#x2F;h4&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;The includes are done for the following reasons:&lt;&#x2F;p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;stdio.h&lt;&#x2F;code&gt;: I&#x2F;O functionality like printf, fprintf, etc&lt;&#x2F;li&gt;
+&lt;li&gt;&lt;code&gt;stdlib.h&lt;&#x2F;code&gt;: standard C library for exit function, exit status codes, etc&lt;&#x2F;li&gt;
+&lt;li&gt;&lt;code&gt;unistd.h&lt;&#x2F;code&gt;: This has the implementation of &lt;code&gt;getopt()&lt;&#x2F;code&gt;&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;&#x2F;li&gt;
+&lt;li&gt;
+&lt;p&gt;The main function has the command line arguments passed to it, as explained in the previous title.&lt;&#x2F;p&gt;
+&lt;&#x2F;li&gt;
+&lt;li&gt;
+&lt;p&gt;Variables defined are as follows:&lt;&#x2F;p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;code&gt;extern char *optarg&lt;&#x2F;code&gt;: This is for storing the values that are passed to a flag. Here for &lt;code&gt;-f&lt;&#x2F;code&gt; flag. Where this flag is recieved the variable points to the string that was passed to it.&lt;&#x2F;p&gt;
+&lt;&#x2F;li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;code&gt;extern int optind&lt;&#x2F;code&gt;: This is the index of the argument that is being parsed.&lt;&#x2F;p&gt;
+&lt;&#x2F;li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;code&gt;int out, err =0&lt;&#x2F;code&gt;: The out is for storing the current argument that is being parsed of -1 if EOArgument is reached. err is to check if any invaid flag is passed. it is used in the end of the switch statement.&lt;&#x2F;p&gt;
+&lt;&#x2F;li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;code&gt;int lflag = 0, fflag = 0&lt;&#x2F;code&gt;: This variables are for knowning if the flags were triggered. Here, in my case &lt;code&gt;-l or -f&lt;&#x2F;code&gt; are triggered or not. &lt;code&gt;char *fname&lt;&#x2F;code&gt; similarly this is for storing the argument passed to the &lt;code&gt;-f&lt;&#x2F;code&gt; flag.&lt;&#x2F;p&gt;
+&lt;&#x2F;li&gt;
+&lt;li&gt;
+&lt;p&gt;The &lt;code&gt;usage&lt;&#x2F;code&gt; string is just for providing with a useful help if they want to know which flags are to be used and how, if any special cases. There is a syntax to write this as well, the flags present in the &lt;code&gt;[]&lt;&#x2F;code&gt; (squarebrackets) are representing the optional flags and the others show the compulsary flags or arguments&lt;&#x2F;p&gt;
+&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;&#x2F;li&gt;
+&lt;li&gt;
+&lt;p&gt;In the while loop, is where the magic happens&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;c&quot; style=&quot;background-color:#282828;color:#fdf4c1aa;&quot; class=&quot;language-c &quot;&gt;&lt;code class=&quot;language-c&quot; data-lang=&quot;c&quot;&gt;&lt;span&gt;out &lt;&#x2F;span&gt;&lt;span style=&quot;color:#fe8019;&quot;&gt;= &lt;&#x2F;span&gt;&lt;span style=&quot;color:#fdf4c1;&quot;&gt;getopt(argc, argv, &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b8bb26;&quot;&gt;&amp;quot;lf:&amp;quot;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#fdf4c1;&quot;&gt;)
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;​ Here the arguments that are passed to the main function are directly passed to the getopt function, with an extra argument. This extra argument is the schema for parsing the flags.&lt;&#x2F;p&gt;
+&lt;p&gt;​ Here, &lt;code&gt;&amp;quot;lf:&amp;quot;&lt;&#x2F;code&gt; means look for &lt;code&gt;-l&lt;&#x2F;code&gt; flag and look for &lt;code&gt;-f&lt;&#x2F;code&gt; flag with an argument &lt;code&gt;:&lt;&#x2F;code&gt;.&lt;&#x2F;p&gt;
+&lt;p&gt;​ eg. &lt;code&gt;abe:w:&lt;&#x2F;code&gt; here &lt;code&gt;-a and -b&lt;&#x2F;code&gt; are the flags (toggles) and &lt;code&gt;-e&lt;&#x2F;code&gt; and &lt;code&gt;-w&lt;&#x2F;code&gt; would expect an argument.&lt;&#x2F;p&gt;
+&lt;p&gt;There is no special way to tell if a argument is permanent of optional this can be checked after the while loop manually, well this is C after all 😅.&lt;&#x2F;p&gt;
+&lt;p&gt;​ Every time the variable &lt;code&gt;out&lt;&#x2F;code&gt; will hold the flag. and if it equals &lt;code&gt;-1&lt;&#x2F;code&gt; then there are no further flags to parse.&lt;&#x2F;p&gt;
+&lt;&#x2F;li&gt;
+&lt;li&gt;
+&lt;p&gt;The switch case, this is where you parse the flags.&lt;&#x2F;p&gt;
+&lt;p&gt;​ As stated in the top &lt;code&gt;out&lt;&#x2F;code&gt; holds the flag name. Thus we are checking if the flag that is present is one of the desired one, if so the we say that the flag is triggered by setting the variable corresponding to the flag to &lt;code&gt;1&lt;&#x2F;code&gt; i.e. &lt;code&gt;true&lt;&#x2F;code&gt; &lt;em&gt;(Ain’t no boolean in C)&lt;&#x2F;em&gt;.&lt;&#x2F;p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;code&gt;optarg&lt;&#x2F;code&gt;: The variable stores the string (&lt;code&gt;char *&lt;&#x2F;code&gt;) that is passed to the flags with &lt;code&gt;:&lt;&#x2F;code&gt; in front of them, in the schema in the point above.&lt;&#x2F;p&gt;
+&lt;&#x2F;li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;code&gt;case &#x27;?&#x27;:&lt;&#x2F;code&gt; Now, we haven’t added &lt;code&gt;?&lt;&#x2F;code&gt; to the schema, then why are we looking for it.&lt;&#x2F;p&gt;
+&lt;p&gt;​ This cases tests if any flag other than those specified in the schema are passed. That’s why we are setting &lt;code&gt;err = 1&lt;&#x2F;code&gt;. We will use this variable to raise an exception in the future.&lt;&#x2F;p&gt;
+&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;&#x2F;li&gt;
+&lt;li&gt;
+&lt;p&gt;Now, we do the error handling&lt;&#x2F;p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;We first look if the &lt;code&gt;-f&lt;&#x2F;code&gt; was triggered or not. if not triggered then we print the error message to the STDERR and then exit with a status code of &lt;strong&gt;1&lt;&#x2F;strong&gt;.&lt;&#x2F;p&gt;
+&lt;&#x2F;li&gt;
+&lt;li&gt;
+&lt;p&gt;The second condition is used to check if the all the arguments are parsed.&lt;&#x2F;p&gt;
+&lt;p&gt;we are comparing the &lt;code&gt;optind&lt;&#x2F;code&gt; and &lt;code&gt;argc&lt;&#x2F;code&gt;.&lt;&#x2F;p&gt;
+&lt;p&gt;&lt;code&gt;optind&lt;&#x2F;code&gt; points to the current argument that is being parsed. If it points to the unnamed variable if any left or it’s value would be equal to that of &lt;code&gt;argc&lt;&#x2F;code&gt;. This would mean that all the variables are parsed and no unnamed variable are left.&lt;&#x2F;p&gt;
+&lt;&#x2F;li&gt;
+&lt;li&gt;
+&lt;p&gt;We also look for the &lt;code&gt;err&lt;&#x2F;code&gt; variable which is triggered if any unnamed flag is invoked.&lt;&#x2F;p&gt;
+&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;&#x2F;li&gt;
+&lt;li&gt;
+&lt;p&gt;We are finally going for the implementation.&lt;&#x2F;p&gt;
+&lt;p&gt;At the end you can use the flags that are invoked how ever you want. Here i am just printing if the flag is invoked. But you can get creative.&lt;&#x2F;p&gt;
+&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;h2 id=&quot;future-of-cli&quot;&gt;Future of CLI&lt;&#x2F;h2&gt;
+&lt;p&gt;We were talking about C, but there are other languages with implement the command line interface much better that &lt;code&gt;getopt&lt;&#x2F;code&gt;. There are also other command line implementation in C, if you dig through the &lt;a rel=&quot;noopener&quot; target=&quot;_blank&quot; href=&quot;https:&#x2F;&#x2F;github.com&#x2F;&quot;&gt;internet&lt;&#x2F;a&gt;. But this is the default methods that are provided but the standard library (&lt;code&gt;unstd.h&lt;&#x2F;code&gt;).&lt;&#x2F;p&gt;
+</content>
+        
+    </entry>
+    <entry xml:lang="en">
+        <title>Using Tor from Commandline Interface</title>
+        <published>2020-05-30T00:00:00+00:00</published>
+        <updated>2020-05-30T00:00:00+00:00</updated>
+        <author>
+          <name>Unknown</name>
+        </author>
+        <link rel="alternate" href="https://nishantjoshi00.github.io/blog/college/using-tor-on-command-line-for-debian/" type="text/html"/>
+        <id>https://nishantjoshi00.github.io/blog/college/using-tor-on-command-line-for-debian/</id>
+        
+        <content type="html">&lt;h2 id=&quot;introduction&quot;&gt;Introduction&lt;&#x2F;h2&gt;
+&lt;h3 id=&quot;what-is-tor&quot;&gt;What is Tor ??&lt;&#x2F;h3&gt;
+&lt;p&gt;Tor is a network that is used to provide higher security that any existing VPN by enveloping your data into multiple security layers which renders the source untrackable.&lt;&#x2F;p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Unless you share your location to the website you wish to visit or Google&lt;&#x2F;p&gt;
+&lt;&#x2F;blockquote&gt;
+&lt;h3 id=&quot;why-from-command-line&quot;&gt;Why from Command Line ??&lt;&#x2F;h3&gt;
+&lt;p&gt;Basically because it is fun, but also most of the work you would do, ends up done on the terminal in linux, like i have a habit of opening firefox using&lt;&#x2F;p&gt;
+&lt;p&gt;&lt;code&gt;$ firefox &amp;amp;&amp;gt;&#x2F;dev&#x2F;null &amp;amp;&lt;&#x2F;code&gt; instead of clicking on the icon. But other than that when your are trying to access a API locally and would like to prevent the API from knowing your location. Even trying to learn pentesting it is usually done on CLI and its better to be safe from how you are going to expose your system to the internet in such cases.&lt;&#x2F;p&gt;
+&lt;h3 id=&quot;why-debian&quot;&gt;Why Debian ??&lt;&#x2F;h3&gt;
+&lt;p&gt;Firstly, due to experience I know that it would definitely work on Debian&lt;&#x2F;p&gt;
+&lt;p&gt;Secondly, I am also sure that it would work on any other linux distribution, the only changes would be to use the proper package manager. But i have not tried it on any other operating system and thus cannot validate it.&lt;&#x2F;p&gt;
+&lt;h2 id=&quot;installation&quot;&gt;Installation&lt;&#x2F;h2&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;For Debian users &lt;code&gt;apt install tor&lt;&#x2F;code&gt; will do the trick.&lt;&#x2F;p&gt;
+&lt;&#x2F;li&gt;
+&lt;li&gt;
+&lt;p&gt;It you are more interested in getting your hands dirty. Follow the process given below to install tor manually&lt;&#x2F;p&gt;
+&lt;p&gt;First download the source code for tor from their official website, or &lt;a rel=&quot;noopener&quot; target=&quot;_blank&quot; href=&quot;https:&#x2F;&#x2F;2019.www.torproject.org&#x2F;download&#x2F;download.html.en&quot;&gt;click here&lt;&#x2F;a&gt;&lt;&#x2F;p&gt;
+&lt;p&gt;Then open a terminal in the directory where it is placed and start getting your hands dirty&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;bash&quot; style=&quot;background-color:#282828;color:#fdf4c1aa;&quot; class=&quot;language-bash &quot;&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span style=&quot;font-style:italic;color:#928374;&quot;&gt;# For this to work you need tar install which is usually present
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#fdf4c1;&quot;&gt;tar -xzf tor-0.X.Y.Z.W.tar.gz
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#fabd2f;&quot;&gt;cd&lt;&#x2F;span&gt;&lt;span style=&quot;color:#fdf4c1;&quot;&gt; tor-0.X.Y.Z.W
+&lt;&#x2F;span&gt;&lt;span style=&quot;font-style:italic;color:#928374;&quot;&gt;# Here your would require some extra libries to make the configuration of the source successful, that are openssl and zlib or just run:
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#fdf4c1;&quot;&gt;sudo apt-get install libssl-dev
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#fdf4c1;&quot;&gt;sudo apt-get install zlib1g
+&lt;&#x2F;span&gt;&lt;span style=&quot;font-style:italic;color:#928374;&quot;&gt;# Then comes the fun part
+&lt;&#x2F;span&gt;&lt;span style=&quot;font-style:italic;color:#928374;&quot;&gt;# For this step you need gcc installed
+&lt;&#x2F;span&gt;&lt;span style=&quot;font-style:italic;color:#928374;&quot;&gt;# -------------------
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#fdf4c1;&quot;&gt;sudo apt-get install gcc
+&lt;&#x2F;span&gt;&lt;span style=&quot;font-style:italic;color:#928374;&quot;&gt;# -------------------
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#fdf4c1;&quot;&gt;.&#x2F;configure
+&lt;&#x2F;span&gt;&lt;span style=&quot;font-style:italic;color:#928374;&quot;&gt;# This looks a lot like cool hacking stuff we see on movies
+&lt;&#x2F;span&gt;&lt;span style=&quot;font-style:italic;color:#928374;&quot;&gt;# Then just run make
+&lt;&#x2F;span&gt;&lt;span style=&quot;font-style:italic;color:#928374;&quot;&gt;# -----------------
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#fdf4c1;&quot;&gt;sudo apt-get install make
+&lt;&#x2F;span&gt;&lt;span style=&quot;font-style:italic;color:#928374;&quot;&gt;# -----------------
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#fdf4c1;&quot;&gt;sudo make &lt;&#x2F;span&gt;&lt;span style=&quot;color:#fe8019;&quot;&gt;&amp;amp;&amp;amp; &lt;&#x2F;span&gt;&lt;span style=&quot;color:#fdf4c1;&quot;&gt;sudo make install
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;h2 id=&quot;application&quot;&gt;Application&lt;&#x2F;h2&gt;
+&lt;p&gt;To make your terminal torrifed you can use either of two things &lt;strong&gt;torsocks&lt;&#x2F;strong&gt;, &lt;strong&gt;socat&lt;&#x2F;strong&gt;&lt;&#x2F;p&gt;
+&lt;p&gt;Here I am going to show how to use torsocks cause it is simple to setup and use&lt;&#x2F;p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;Here you have two choices your could install it directly using &lt;code&gt;apt install torsocks&lt;&#x2F;code&gt;&lt;&#x2F;p&gt;
+&lt;&#x2F;li&gt;
+&lt;li&gt;
+&lt;p&gt;Or get you hands dirty again:&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;bash&quot; style=&quot;background-color:#282828;color:#fdf4c1aa;&quot; class=&quot;language-bash &quot;&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span style=&quot;color:#fdf4c1;&quot;&gt;git clone https:&#x2F;&#x2F;git.torproject.org&#x2F;torsocks.git
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#fabd2f;&quot;&gt;cd&lt;&#x2F;span&gt;&lt;span style=&quot;color:#fdf4c1;&quot;&gt; torsocks
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#fdf4c1;&quot;&gt;.&#x2F;autogen.sh
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#fdf4c1;&quot;&gt;.&#x2F;configure
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#fdf4c1;&quot;&gt;make &lt;&#x2F;span&gt;&lt;span style=&quot;color:#fe8019;&quot;&gt;&amp;amp;&amp;amp; &lt;&#x2F;span&gt;&lt;span style=&quot;color:#fdf4c1;&quot;&gt;make install
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;Here I am not explaining the IN’s &#x2F; OUT’s because well you are smart and you will figure it out.&lt;&#x2F;p&gt;
+&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;h2 id=&quot;getting-started-using-tor&quot;&gt;Getting started using TOR&lt;&#x2F;h2&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;First start the tor service&lt;&#x2F;p&gt;
+&lt;&#x2F;li&gt;
+&lt;li&gt;
+&lt;p&gt;Now then just run : &lt;code&gt;source torsocks on&lt;&#x2F;code&gt;&lt;&#x2F;p&gt;
+&lt;p&gt;and you are good to go.&lt;&#x2F;p&gt;
+&lt;&#x2F;li&gt;
+&lt;li&gt;
+&lt;p&gt;For turning it off run : &lt;code&gt;source torsocks off&lt;&#x2F;code&gt;&lt;&#x2F;p&gt;
+&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+</content>
+        
+    </entry>
+    <entry xml:lang="en">
+        <title>Disk encryption using LUKS</title>
+        <published>2020-05-05T00:00:00+00:00</published>
+        <updated>2020-05-05T00:00:00+00:00</updated>
+        <author>
+          <name>Unknown</name>
+        </author>
+        <link rel="alternate" href="https://nishantjoshi00.github.io/blog/college/disk-encryption/" type="text/html"/>
+        <id>https://nishantjoshi00.github.io/blog/college/disk-encryption/</id>
+        
+        <content type="html">&lt;h1 id=&quot;disk-encryption&quot;&gt;Disk Encryption&lt;&#x2F;h1&gt;
+&lt;p&gt;Given below is a method of encrypting your hard-drive partition (SSD&#x2F;HDD) using luks encryption method, But this file system can only be recognised in a Linux Box and thus can only be decrypted in Linux. As the partition format is unrecognized in windows filesystem.&lt;&#x2F;p&gt;
+&lt;h2 id=&quot;formatting-the-partition&quot;&gt;Formatting the Partition&lt;&#x2F;h2&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Here we are formatting the partition in &lt;strong&gt;LUKS&lt;&#x2F;strong&gt; (&lt;strong&gt;L&lt;&#x2F;strong&gt;inux &lt;strong&gt;U&lt;&#x2F;strong&gt;nified &lt;strong&gt;K&lt;&#x2F;strong&gt;ey &lt;strong&gt;S&lt;&#x2F;strong&gt;etup)&lt;&#x2F;p&gt;
+&lt;&#x2F;blockquote&gt;
+&lt;p&gt;Here we use &lt;code&gt;luksFormat&lt;&#x2F;code&gt; to create a encryption layer. On the partition. By doing so the partition will be completed formated so make sure it is a empty partition.&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;bash&quot; style=&quot;background-color:#282828;color:#fdf4c1aa;&quot; class=&quot;language-bash &quot;&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span style=&quot;color:#fdf4c1;&quot;&gt;$ cryptsetup luksFormat &#x2F;dev&#x2F;sdxY
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;Here x is a alphabet, and Y is a number, which reperesent the block file for the Yth partition of disk x.&lt;&#x2F;p&gt;
+&lt;hr &#x2F;&gt;
+&lt;h2 id=&quot;initialise-luks-devices&quot;&gt;Initialise LUKS devices&lt;&#x2F;h2&gt;
+&lt;p&gt;Here we use the &lt;code&gt;luksOpen&lt;&#x2F;code&gt; which temporarily disables the encryption layer.&lt;&#x2F;p&gt;
+&lt;p&gt;This devices will then be available in &#x2F;dev&#x2F;mapper&#x2F;&lt;name&gt;&lt;&#x2F;p&gt;
+&lt;p&gt;here &lt;name&gt; is a arbitrary value used to identify the block file.&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;bash&quot; style=&quot;background-color:#282828;color:#fdf4c1aa;&quot; class=&quot;language-bash &quot;&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span style=&quot;color:#fdf4c1;&quot;&gt;$ cryptsetup luksOpen &#x2F;dev&#x2F;sdxY &lt;&#x2F;span&gt;&lt;span style=&quot;color:#fe8019;&quot;&gt;&amp;lt;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#fdf4c1;&quot;&gt;name&lt;&#x2F;span&gt;&lt;span style=&quot;color:#fe8019;&quot;&gt;&amp;gt;
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;hr &#x2F;&gt;
+&lt;h2 id=&quot;format-this-decrypted-device&quot;&gt;Format this decrypted device&lt;&#x2F;h2&gt;
+&lt;p&gt;As &lt;strong&gt;luks&lt;&#x2F;strong&gt; acts as an encrypted wrapper over the underlying partition. we can use any &lt;code&gt;mkfs&lt;&#x2F;code&gt; cmd to format it. We can then normally mount it. This is done only after unlocking the encryption layer.&lt;&#x2F;p&gt;
+&lt;hr &#x2F;&gt;
+&lt;h2 id=&quot;mounting-the-device&quot;&gt;Mounting the Device&lt;&#x2F;h2&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Sometimes connecting the device with a encrypted partition, automatically provokes a initialising and mounting procedure and prompts you to enter your password, in some Linux operating systems.&lt;&#x2F;p&gt;
+&lt;&#x2F;blockquote&gt;
+&lt;p&gt;The device can be mounted simply using the mount command&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;bash&quot; style=&quot;background-color:#282828;color:#fdf4c1aa;&quot; class=&quot;language-bash &quot;&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span style=&quot;color:#fdf4c1;&quot;&gt;$ mount &#x2F;dev&#x2F;mapper&#x2F;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#fe8019;&quot;&gt;&amp;lt;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#fdf4c1;&quot;&gt;name&lt;&#x2F;span&gt;&lt;span style=&quot;color:#fe8019;&quot;&gt;&amp;gt; &amp;lt;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#fdf4c1;&quot;&gt;mountpoint&lt;&#x2F;span&gt;&lt;span style=&quot;color:#fe8019;&quot;&gt;&amp;gt;
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;hr &#x2F;&gt;
+&lt;h2 id=&quot;re-encrypt-the-partition&quot;&gt;Re-Encrypt the partition&lt;&#x2F;h2&gt;
+&lt;p&gt;Here the drive must be unmounted first, then perform a re-encryption using:&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;bash&quot; style=&quot;background-color:#282828;color:#fdf4c1aa;&quot; class=&quot;language-bash &quot;&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span style=&quot;color:#fdf4c1;&quot;&gt;$ cryptsetup luksClose &#x2F;dev&#x2F;mapper&#x2F;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#fe8019;&quot;&gt;&amp;lt;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#fdf4c1;&quot;&gt;name&lt;&#x2F;span&gt;&lt;span style=&quot;color:#fe8019;&quot;&gt;&amp;gt;
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;h2 id=&quot;changing-the-password-of-the-partition&quot;&gt;Changing the Password of the partition&lt;&#x2F;h2&gt;
+&lt;p&gt;This requires you to know the old password given to the partition.&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;bash&quot; style=&quot;background-color:#282828;color:#fdf4c1aa;&quot; class=&quot;language-bash &quot;&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span style=&quot;color:#fdf4c1;&quot;&gt;$ cryptsetup luksChangeKey &#x2F;dev&#x2F;sdxY
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+</content>
+        
+    </entry>
+    <entry xml:lang="en">
+        <title>Wireguard VPN for linux</title>
+        <published>2020-05-01T00:00:00+00:00</published>
+        <updated>2020-05-01T00:00:00+00:00</updated>
+        <author>
+          <name>Unknown</name>
+        </author>
+        <link rel="alternate" href="https://nishantjoshi00.github.io/blog/college/wireguard/" type="text/html"/>
+        <id>https://nishantjoshi00.github.io/blog/college/wireguard/</id>
+        
+        <content type="html">&lt;h1 id=&quot;overview-of-wireguard&quot;&gt;Overview of wireguard&lt;&#x2F;h1&gt;
+&lt;h2 id=&quot;what-is-wireguard&quot;&gt;What is wireguard ?&lt;&#x2F;h2&gt;
+&lt;p&gt;Wireguard is a new VPN client &#x2F; server addition to the linux kernel for 5.6. This is a small but powerful VPN client &#x2F; server which can be setup and implemented within no time. It is build over and similar to the concept of SSH and moch.&lt;&#x2F;p&gt;
+&lt;h2 id=&quot;installation&quot;&gt;Installation&lt;&#x2F;h2&gt;
+&lt;p&gt;Source: &lt;a rel=&quot;noopener&quot; target=&quot;_blank&quot; href=&quot;https:&#x2F;&#x2F;wireguard.com&#x2F;install&#x2F;&quot;&gt;wireguard.com&#x2F;install&#x2F;&lt;&#x2F;a&gt;&lt;&#x2F;p&gt;
+&lt;p&gt;Those with kernel &amp;gt;= 5.6 you already got it. For Windows &amp;amp; Android users checkout their official website : &lt;a href=&quot;https:&#x2F;&#x2F;nishantjoshi00.github.io&#x2F;blog&#x2F;college&#x2F;wireguard&#x2F;wireguard.com&quot;&gt;wireguard.com&lt;&#x2F;a&gt;&lt;&#x2F;p&gt;
+&lt;p&gt;For linux there are couple of ways to install it&lt;&#x2F;p&gt;
+&lt;ul&gt;
+&lt;li&gt;install using the default package manager&lt;&#x2F;li&gt;
+&lt;li&gt;compile for source (but why would you do that)&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;h2 id=&quot;setting-up&quot;&gt;Setting up&lt;&#x2F;h2&gt;
+&lt;p&gt;There are two ways of setting up the wireguard VPN interface&lt;&#x2F;p&gt;
+&lt;ul&gt;
+&lt;li&gt;Through the configuration file&lt;&#x2F;li&gt;
+&lt;li&gt;Through command line&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;h3 id=&quot;through-command-line&quot;&gt;Through command line&lt;&#x2F;h3&gt;
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;After installation is done, generation of private key for the tunneling is required&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;bash&quot; style=&quot;background-color:#282828;color:#fdf4c1aa;&quot; class=&quot;language-bash &quot;&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span style=&quot;color:#fdf4c1;&quot;&gt;$ wg genkey &lt;&#x2F;span&gt;&lt;span style=&quot;color:#fe8019;&quot;&gt;&amp;gt;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#fdf4c1;&quot;&gt; private.key
+&lt;&#x2F;span&gt;&lt;span style=&quot;font-style:italic;color:#928374;&quot;&gt;# This generates the base64 encoded private key
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#fdf4c1;&quot;&gt;$ chmod 600 private.key
+&lt;&#x2F;span&gt;&lt;span style=&quot;font-style:italic;color:#928374;&quot;&gt;# Securing it against any unwanted tampering
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;&#x2F;li&gt;
+&lt;li&gt;
+&lt;p&gt;Setting up the network interface for the VPN&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;bash&quot; style=&quot;background-color:#282828;color:#fdf4c1aa;&quot; class=&quot;language-bash &quot;&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span style=&quot;color:#fdf4c1;&quot;&gt;$ ip link add wg0 type wireguard
+&lt;&#x2F;span&gt;&lt;span style=&quot;font-style:italic;color:#928374;&quot;&gt;# It could be anything wg0 - wgn
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;&#x2F;li&gt;
+&lt;li&gt;
+&lt;p&gt;Setting IP Address for the newly created interface&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;bash&quot; style=&quot;background-color:#282828;color:#fdf4c1aa;&quot; class=&quot;language-bash &quot;&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span style=&quot;color:#fdf4c1;&quot;&gt;$ ip addr add &lt;&#x2F;span&gt;&lt;span style=&quot;color:#fe8019;&quot;&gt;&amp;lt;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#fdf4c1;&quot;&gt;ip-address&lt;&#x2F;span&gt;&lt;span style=&quot;color:#fe8019;&quot;&gt;&amp;gt;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#fdf4c1;&quot;&gt;&#x2F;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#fe8019;&quot;&gt;&amp;lt;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#fdf4c1;&quot;&gt;sn-mask&lt;&#x2F;span&gt;&lt;span style=&quot;color:#fe8019;&quot;&gt;&amp;gt;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#fdf4c1;&quot;&gt; dev wg0
+&lt;&#x2F;span&gt;&lt;span style=&quot;font-style:italic;color:#928374;&quot;&gt;# Here &amp;lt;sn-mask&amp;gt; : subnet mask
+&lt;&#x2F;span&gt;&lt;span style=&quot;font-style:italic;color:#928374;&quot;&gt;# wg0 is just the example you have to use the one specified in step 2
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;&#x2F;li&gt;
+&lt;li&gt;
+&lt;p&gt;Configuring the interface&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;bash&quot; style=&quot;background-color:#282828;color:#fdf4c1aa;&quot; class=&quot;language-bash &quot;&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span style=&quot;color:#fdf4c1;&quot;&gt;$ wg set wg0 private-key .&#x2F;private.key
+&lt;&#x2F;span&gt;&lt;span style=&quot;font-style:italic;color:#928374;&quot;&gt;# This is the assign the private key to the interface
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;&#x2F;li&gt;
+&lt;li&gt;
+&lt;p&gt;To start &#x2F; stop the interface&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;bash&quot; style=&quot;background-color:#282828;color:#fdf4c1aa;&quot; class=&quot;language-bash &quot;&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span style=&quot;font-style:italic;color:#928374;&quot;&gt;# To start the interface
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#fdf4c1;&quot;&gt;$ ip link set wg0 up
+&lt;&#x2F;span&gt;&lt;span style=&quot;font-style:italic;color:#928374;&quot;&gt;# To stop the interface
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#fdf4c1;&quot;&gt;$ ip linke set wg0 down
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;&#x2F;li&gt;
+&lt;&#x2F;ol&gt;
+&lt;p&gt;After this is done the configuration of the interface is done&lt;&#x2F;p&gt;
+&lt;p&gt;Now, you might need to connect to someone’s private network, to do this we have to configure the peer for the interface, this can be done multiple times with multiple peers&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;bash&quot; style=&quot;background-color:#282828;color:#fdf4c1aa;&quot; class=&quot;language-bash &quot;&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span style=&quot;color:#fdf4c1;&quot;&gt;wg set wg0 peer &lt;&#x2F;span&gt;&lt;span style=&quot;color:#fe8019;&quot;&gt;&amp;lt;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#fdf4c1;&quot;&gt;peer-pub-key&lt;&#x2F;span&gt;&lt;span style=&quot;color:#fe8019;&quot;&gt;&amp;gt;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#fdf4c1;&quot;&gt; allowed-ips &lt;&#x2F;span&gt;&lt;span style=&quot;color:#fe8019;&quot;&gt;&amp;lt;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#fdf4c1;&quot;&gt;ip-addr(with subnet mask&lt;&#x2F;span&gt;&lt;span&gt;)&lt;&#x2F;span&gt;&lt;span style=&quot;color:#fe8019;&quot;&gt;&amp;gt;&lt;&#x2F;span&gt;&lt;span&gt; endpoint &lt;&#x2F;span&gt;&lt;span style=&quot;color:#fe8019;&quot;&gt;&amp;lt;&lt;&#x2F;span&gt;&lt;span&gt;current-ip&lt;&#x2F;span&gt;&lt;span style=&quot;color:#fe8019;&quot;&gt;&amp;gt;&lt;&#x2F;span&gt;&lt;span&gt;:&lt;&#x2F;span&gt;&lt;span style=&quot;color:#fe8019;&quot;&gt;&amp;lt;&lt;&#x2F;span&gt;&lt;span&gt;port&lt;&#x2F;span&gt;&lt;span style=&quot;color:#fe8019;&quot;&gt;&amp;gt;
+&lt;&#x2F;span&gt;&lt;span style=&quot;font-style:italic;color:#928374;&quot;&gt;# &amp;lt;peer-pub-key&amp;gt; : This is the public key of the peer
+&lt;&#x2F;span&gt;&lt;span style=&quot;font-style:italic;color:#928374;&quot;&gt;# This can be generated by the peer after generating the private key
+&lt;&#x2F;span&gt;&lt;span style=&quot;font-style:italic;color:#928374;&quot;&gt;# Once he has his own private.key and interface configured, then
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#fdf4c1;&quot;&gt;$ wg pubkey &lt;&#x2F;span&gt;&lt;span style=&quot;color:#fe8019;&quot;&gt;&amp;lt;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#fdf4c1;&quot;&gt; private.key &lt;&#x2F;span&gt;&lt;span style=&quot;color:#fe8019;&quot;&gt;&amp;gt;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#fdf4c1;&quot;&gt; public.key
+&lt;&#x2F;span&gt;&lt;span style=&quot;font-style:italic;color:#928374;&quot;&gt;# Here your could also provide the private key directly and get the public key
+&lt;&#x2F;span&gt;&lt;span style=&quot;font-style:italic;color:#928374;&quot;&gt;# $ echo &amp;lt;private-key&amp;gt; | wg pubkey
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span style=&quot;font-style:italic;color:#928374;&quot;&gt;# This content of the file public.key is the public key
+&lt;&#x2F;span&gt;&lt;span style=&quot;font-style:italic;color:#928374;&quot;&gt;# &amp;lt;ip-addr&amp;gt; : This is the last known ip address of the host in the private network with subnetmask
+&lt;&#x2F;span&gt;&lt;span style=&quot;font-style:italic;color:#928374;&quot;&gt;# &amp;lt;current-ip&amp;gt;:&amp;lt;port&amp;gt; : This is the IP address of the peer which is accessable to us, generally the port : 51820 but it could be anything to check what the port of the peer is ask him to :
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#fdf4c1;&quot;&gt;$ wg
+&lt;&#x2F;span&gt;&lt;span style=&quot;font-style:italic;color:#928374;&quot;&gt;# This output of the command contains the listening port for the peer&amp;#39;s interface
+&lt;&#x2F;span&gt;&lt;span style=&quot;font-style:italic;color:#928374;&quot;&gt;# The endpoint is optional
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;hr &#x2F;&gt;
+&lt;h3 id=&quot;using-configuration-file&quot;&gt;Using configuration file&lt;&#x2F;h3&gt;
+&lt;p&gt;Here we can generate a configuration file and then pass it to the wg command line interface, but there is a much better way, let’s see what that is:&lt;&#x2F;p&gt;
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;Go the the &#x2F;etc&#x2F;wireguard&lt;&#x2F;p&gt;
+&lt;&#x2F;li&gt;
+&lt;li&gt;
+&lt;p&gt;Now, create a configuration file wg0.conf (&lt;em&gt;from wg0.conf - wgn.conf&lt;&#x2F;em&gt;)&lt;&#x2F;p&gt;
+&lt;&#x2F;li&gt;
+&lt;li&gt;
+&lt;p&gt;Generate and copy a private key using the wg command&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;bash&quot; style=&quot;background-color:#282828;color:#fdf4c1aa;&quot; class=&quot;language-bash &quot;&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span style=&quot;color:#fdf4c1;&quot;&gt;$ wg genkey
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;&#x2F;li&gt;
+&lt;li&gt;
+&lt;p&gt;Let’s add content to the configuration file&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;properties&quot; style=&quot;background-color:#282828;color:#fdf4c1aa;&quot; class=&quot;language-properties &quot;&gt;&lt;code class=&quot;language-properties&quot; data-lang=&quot;properties&quot;&gt;&lt;span style=&quot;color:#8ec07c;&quot;&gt;[ &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b8bb26;&quot;&gt;Interface ]
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#8ec07c;&quot;&gt;PrivateKey &lt;&#x2F;span&gt;&lt;span&gt;= &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b8bb26;&quot;&gt;&amp;lt;Private-key&amp;gt; # Generated in step 3
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#8ec07c;&quot;&gt;ListenPort &lt;&#x2F;span&gt;&lt;span&gt;= &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b8bb26;&quot;&gt;51820 # It could be anything really, this is often used
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#8ec07c;&quot;&gt;[ &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b8bb26;&quot;&gt;Peer ] # This section can be used multiple times depending on the no. of peers
+&lt;&#x2F;span&gt;&lt;span style=&quot;font-style:italic;color:#928374;&quot;&gt;# This section can be ignored if you just want to setup the interface
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#8ec07c;&quot;&gt;PublicKey &lt;&#x2F;span&gt;&lt;span&gt;= &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b8bb26;&quot;&gt;&amp;lt;peer-pub-key&amp;gt; # This is explained in the CLI peer setup step above
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#8ec07c;&quot;&gt;Endpoint &lt;&#x2F;span&gt;&lt;span&gt;= &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b8bb26;&quot;&gt;&amp;lt;current-ip&amp;gt;:&amp;lt;port&amp;gt; # This is the ip of the peer the is visible to us (optional)
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#8ec07c;&quot;&gt;AllowedIPs &lt;&#x2F;span&gt;&lt;span&gt;= &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b8bb26;&quot;&gt;&amp;lt;ip-addr&amp;gt; # This is the last known IP of the peer in the private net
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;&#x2F;li&gt;
+&lt;li&gt;
+&lt;p&gt;After saving this you can spin up the interface with a single command.&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;bash&quot; style=&quot;background-color:#282828;color:#fdf4c1aa;&quot; class=&quot;language-bash &quot;&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span style=&quot;color:#fdf4c1;&quot;&gt;$ systemctl start wg-quick@wg0.service
+&lt;&#x2F;span&gt;&lt;span style=&quot;font-style:italic;color:#928374;&quot;&gt;# The wg0 -&amp;gt; can be replaced by the interface name you have choosen
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;&#x2F;li&gt;
+&lt;&#x2F;ol&gt;
+&lt;hr &#x2F;&gt;
+&lt;h2 id=&quot;thank-you&quot;&gt;Thank you&lt;&#x2F;h2&gt;
+&lt;p&gt;source : &lt;a href=&quot;https:&#x2F;&#x2F;nishantjoshi00.github.io&#x2F;blog&#x2F;college&#x2F;wireguard&#x2F;wireguard.com&quot;&gt;wireguard.com&lt;&#x2F;a&gt;&lt;&#x2F;p&gt;
+</content>
+        
+    </entry>
+</feed>
