@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en">
+    <title> - security</title>
+    <link href="https://nishantjoshi00.github.io/tags/security/atom.xml" rel="self" type="application/atom+xml"/>
+    <link href="https://nishantjoshi00.github.io"/>
+    <generator uri="https://www.getzola.org/">Zola</generator>
+    <updated>2020-05-30T00:00:00+00:00</updated>
+    <id>https://nishantjoshi00.github.io/tags/security/atom.xml</id>
+    <entry xml:lang="en">
+        <title>Using Tor from Commandline Interface</title>
+        <published>2020-05-30T00:00:00+00:00</published>
+        <updated>2020-05-30T00:00:00+00:00</updated>
+        <author>
+          <name>Unknown</name>
+        </author>
+        <link rel="alternate" href="https://nishantjoshi00.github.io/blog/college/using-tor-on-command-line-for-debian/" type="text/html"/>
+        <id>https://nishantjoshi00.github.io/blog/college/using-tor-on-command-line-for-debian/</id>
+        
+        <content type="html">&lt;h2 id=&quot;introduction&quot;&gt;Introduction&lt;&#x2F;h2&gt;
+&lt;h3 id=&quot;what-is-tor&quot;&gt;What is Tor ??&lt;&#x2F;h3&gt;
+&lt;p&gt;Tor is a network that is used to provide higher security that any existing VPN by enveloping your data into multiple security layers which renders the source untrackable.&lt;&#x2F;p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Unless you share your location to the website you wish to visit or Google&lt;&#x2F;p&gt;
+&lt;&#x2F;blockquote&gt;
+&lt;h3 id=&quot;why-from-command-line&quot;&gt;Why from Command Line ??&lt;&#x2F;h3&gt;
+&lt;p&gt;Basically because it is fun, but also most of the work you would do, ends up done on the terminal in linux, like i have a habit of opening firefox using&lt;&#x2F;p&gt;
+&lt;p&gt;&lt;code&gt;$ firefox &amp;amp;&amp;gt;&#x2F;dev&#x2F;null &amp;amp;&lt;&#x2F;code&gt; instead of clicking on the icon. But other than that when your are trying to access a API locally and would like to prevent the API from knowing your location. Even trying to learn pentesting it is usually done on CLI and its better to be safe from how you are going to expose your system to the internet in such cases.&lt;&#x2F;p&gt;
+&lt;h3 id=&quot;why-debian&quot;&gt;Why Debian ??&lt;&#x2F;h3&gt;
+&lt;p&gt;Firstly, due to experience I know that it would definitely work on Debian&lt;&#x2F;p&gt;
+&lt;p&gt;Secondly, I am also sure that it would work on any other linux distribution, the only changes would be to use the proper package manager. But i have not tried it on any other operating system and thus cannot validate it.&lt;&#x2F;p&gt;
+&lt;h2 id=&quot;installation&quot;&gt;Installation&lt;&#x2F;h2&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;For Debian users &lt;code&gt;apt install tor&lt;&#x2F;code&gt; will do the trick.&lt;&#x2F;p&gt;
+&lt;&#x2F;li&gt;
+&lt;li&gt;
+&lt;p&gt;It you are more interested in getting your hands dirty. Follow the process given below to install tor manually&lt;&#x2F;p&gt;
+&lt;p&gt;First download the source code for tor from their official website, or &lt;a rel=&quot;noopener&quot; target=&quot;_blank&quot; href=&quot;https:&#x2F;&#x2F;2019.www.torproject.org&#x2F;download&#x2F;download.html.en&quot;&gt;click here&lt;&#x2F;a&gt;&lt;&#x2F;p&gt;
+&lt;p&gt;Then open a terminal in the directory where it is placed and start getting your hands dirty&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;bash&quot; style=&quot;background-color:#282828;color:#fdf4c1aa;&quot; class=&quot;language-bash &quot;&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span style=&quot;font-style:italic;color:#928374;&quot;&gt;# For this to work you need tar install which is usually present
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#fdf4c1;&quot;&gt;tar -xzf tor-0.X.Y.Z.W.tar.gz
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#fabd2f;&quot;&gt;cd&lt;&#x2F;span&gt;&lt;span style=&quot;color:#fdf4c1;&quot;&gt; tor-0.X.Y.Z.W
+&lt;&#x2F;span&gt;&lt;span style=&quot;font-style:italic;color:#928374;&quot;&gt;# Here your would require some extra libries to make the configuration of the source successful, that are openssl and zlib or just run:
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#fdf4c1;&quot;&gt;sudo apt-get install libssl-dev
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#fdf4c1;&quot;&gt;sudo apt-get install zlib1g
+&lt;&#x2F;span&gt;&lt;span style=&quot;font-style:italic;color:#928374;&quot;&gt;# Then comes the fun part
+&lt;&#x2F;span&gt;&lt;span style=&quot;font-style:italic;color:#928374;&quot;&gt;# For this step you need gcc installed
+&lt;&#x2F;span&gt;&lt;span style=&quot;font-style:italic;color:#928374;&quot;&gt;# -------------------
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#fdf4c1;&quot;&gt;sudo apt-get install gcc
+&lt;&#x2F;span&gt;&lt;span style=&quot;font-style:italic;color:#928374;&quot;&gt;# -------------------
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#fdf4c1;&quot;&gt;.&#x2F;configure
+&lt;&#x2F;span&gt;&lt;span style=&quot;font-style:italic;color:#928374;&quot;&gt;# This looks a lot like cool hacking stuff we see on movies
+&lt;&#x2F;span&gt;&lt;span style=&quot;font-style:italic;color:#928374;&quot;&gt;# Then just run make
+&lt;&#x2F;span&gt;&lt;span style=&quot;font-style:italic;color:#928374;&quot;&gt;# -----------------
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#fdf4c1;&quot;&gt;sudo apt-get install make
+&lt;&#x2F;span&gt;&lt;span style=&quot;font-style:italic;color:#928374;&quot;&gt;# -----------------
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#fdf4c1;&quot;&gt;sudo make &lt;&#x2F;span&gt;&lt;span style=&quot;color:#fe8019;&quot;&gt;&amp;amp;&amp;amp; &lt;&#x2F;span&gt;&lt;span style=&quot;color:#fdf4c1;&quot;&gt;sudo make install
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;h2 id=&quot;application&quot;&gt;Application&lt;&#x2F;h2&gt;
+&lt;p&gt;To make your terminal torrifed you can use either of two things &lt;strong&gt;torsocks&lt;&#x2F;strong&gt;, &lt;strong&gt;socat&lt;&#x2F;strong&gt;&lt;&#x2F;p&gt;
+&lt;p&gt;Here I am going to show how to use torsocks cause it is simple to setup and use&lt;&#x2F;p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;Here you have two choices your could install it directly using &lt;code&gt;apt install torsocks&lt;&#x2F;code&gt;&lt;&#x2F;p&gt;
+&lt;&#x2F;li&gt;
+&lt;li&gt;
+&lt;p&gt;Or get you hands dirty again:&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;bash&quot; style=&quot;background-color:#282828;color:#fdf4c1aa;&quot; class=&quot;language-bash &quot;&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span style=&quot;color:#fdf4c1;&quot;&gt;git clone https:&#x2F;&#x2F;git.torproject.org&#x2F;torsocks.git
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#fabd2f;&quot;&gt;cd&lt;&#x2F;span&gt;&lt;span style=&quot;color:#fdf4c1;&quot;&gt; torsocks
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#fdf4c1;&quot;&gt;.&#x2F;autogen.sh
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#fdf4c1;&quot;&gt;.&#x2F;configure
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#fdf4c1;&quot;&gt;make &lt;&#x2F;span&gt;&lt;span style=&quot;color:#fe8019;&quot;&gt;&amp;amp;&amp;amp; &lt;&#x2F;span&gt;&lt;span style=&quot;color:#fdf4c1;&quot;&gt;make install
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;Here I am not explaining the IN’s &#x2F; OUT’s because well you are smart and you will figure it out.&lt;&#x2F;p&gt;
+&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;h2 id=&quot;getting-started-using-tor&quot;&gt;Getting started using TOR&lt;&#x2F;h2&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;First start the tor service&lt;&#x2F;p&gt;
+&lt;&#x2F;li&gt;
+&lt;li&gt;
+&lt;p&gt;Now then just run : &lt;code&gt;source torsocks on&lt;&#x2F;code&gt;&lt;&#x2F;p&gt;
+&lt;p&gt;and you are good to go.&lt;&#x2F;p&gt;
+&lt;&#x2F;li&gt;
+&lt;li&gt;
+&lt;p&gt;For turning it off run : &lt;code&gt;source torsocks off&lt;&#x2F;code&gt;&lt;&#x2F;p&gt;
+&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+</content>
+        
+    </entry>
+    <entry xml:lang="en">
+        <title>Handling Secure Boot</title>
+        <published>2020-05-20T00:00:00+00:00</published>
+        <updated>2020-05-20T00:00:00+00:00</updated>
+        <author>
+          <name>Unknown</name>
+        </author>
+        <link rel="alternate" href="https://nishantjoshi00.github.io/blog/college/handling-secure-boot/" type="text/html"/>
+        <id>https://nishantjoshi00.github.io/blog/college/handling-secure-boot/</id>
+        
+        <content type="html">&lt;h1 id=&quot;handling-secure-boot&quot;&gt;Handling Secure Boot&lt;&#x2F;h1&gt;
+&lt;h2 id=&quot;what-is-secure-boot&quot;&gt;What is Secure Boot?&lt;&#x2F;h2&gt;
+&lt;p&gt;Secure boot is a feature provided by many manufacturing companies, this feature is present inside the BIOS of your system. The prime goal of this feature is to check whether the bootloader that is being executed is safe (Key verified) of not.&lt;&#x2F;p&gt;
+&lt;h2 id=&quot;why-do-self-signing&quot;&gt;Why do self-signing?&lt;&#x2F;h2&gt;
+&lt;p&gt;Self-signing allows the user the sign manually which bootloaders are allowed to be executed, or to sign some binaries that you have created and you want to execute at boot time. It uses the MOK manager to adds the key as trusted signing agent. &lt;&#x2F;p&gt;
+&lt;h2 id=&quot;how-to-self-sign&quot;&gt;How to Self-sign&lt;&#x2F;h2&gt;
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;Creating your own key, certificate to add&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;bash&quot; style=&quot;background-color:#282828;color:#fdf4c1aa;&quot; class=&quot;language-bash &quot;&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span style=&quot;color:#fdf4c1;&quot;&gt;$ openssl req -new -x509 -newkey rsa:2048 -keyout MOK.key -out MOK.crt \
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#fdf4c1;&quot;&gt;	-nodes -days 3650 -subj &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b8bb26;&quot;&gt;&amp;quot;&#x2F;CN: &amp;lt;Your Name&amp;gt;&#x2F;&amp;quot;
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#fdf4c1;&quot;&gt;$ openssl x509 -in MOK.crt -out MOK.cer
+&lt;&#x2F;span&gt;&lt;span style=&quot;font-style:italic;color:#928374;&quot;&gt;# &amp;lt;Your Name&amp;gt; : Enter your name
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;Now there would be three files in the current folder &lt;code&gt;MOK.key, MOK.crt, MOK.cer&lt;&#x2F;code&gt;&lt;&#x2F;p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Here the &lt;strong&gt;MOK.key&lt;&#x2F;strong&gt; is very important and should be kept safe.&lt;&#x2F;p&gt;
+&lt;&#x2F;blockquote&gt;
+&lt;&#x2F;li&gt;
+&lt;li&gt;
+&lt;p&gt;Importing the certificate into the MOK manager&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;bash&quot; style=&quot;background-color:#282828;color:#fdf4c1aa;&quot; class=&quot;language-bash &quot;&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span style=&quot;color:#fdf4c1;&quot;&gt;$ sudo mokutil --import MOK.cer
+&lt;&#x2F;span&gt;&lt;span style=&quot;font-style:italic;color:#928374;&quot;&gt;# Here you would be prompted for a input password.
+&lt;&#x2F;span&gt;&lt;span style=&quot;font-style:italic;color:#928374;&quot;&gt;# This password has further uses so do not forget it
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;&#x2F;li&gt;
+&lt;&#x2F;ol&gt;
+&lt;p&gt;Here after, it depends on what you want to sign&lt;&#x2F;p&gt;
+&lt;hr &#x2F;&gt;
+&lt;h3 id=&quot;signing-binaries&quot;&gt;Signing Binaries&lt;&#x2F;h3&gt;
+&lt;p&gt;This is a low risk easy to perform task, go to the directory where the binaries are stored&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;bash&quot; style=&quot;background-color:#282828;color:#fdf4c1aa;&quot; class=&quot;language-bash &quot;&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span style=&quot;color:#fdf4c1;&quot;&gt;sbsign --key &#x2F;path&#x2F;to&#x2F;MOK.key --cert &#x2F;path&#x2F;to&#x2F;MOK.crt&lt;&#x2F;span&gt;&lt;span style=&quot;color:#b8bb26;&quot;&gt;\ &lt;&#x2F;span&gt;&lt;span style=&quot;color:#fdf4c1;&quot;&gt;--output &lt;&#x2F;span&gt;&lt;span style=&quot;color:#fe8019;&quot;&gt;&amp;lt;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#fdf4c1;&quot;&gt;ofilename&lt;&#x2F;span&gt;&lt;span style=&quot;color:#fe8019;&quot;&gt;&amp;gt;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#fdf4c1;&quot;&gt;.efi &lt;&#x2F;span&gt;&lt;span style=&quot;color:#fe8019;&quot;&gt;&amp;lt;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#fdf4c1;&quot;&gt;filename&lt;&#x2F;span&gt;&lt;span style=&quot;color:#fe8019;&quot;&gt;&amp;gt;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#fdf4c1;&quot;&gt;.efi
+&lt;&#x2F;span&gt;&lt;span style=&quot;font-style:italic;color:#928374;&quot;&gt;# Here the ofilename can be same as filename
+&lt;&#x2F;span&gt;&lt;span style=&quot;font-style:italic;color:#928374;&quot;&gt;# filename is the file you want to sign
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;hr &#x2F;&gt;
+&lt;h3 id=&quot;signing-kernel-modules&quot;&gt;Signing Kernel modules&lt;&#x2F;h3&gt;
+&lt;p&gt;In alternative to signing binaries some times kernel modules can also cause the secure boot check to fail. Signing the kernel modules is as simple as signing any other binary.&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;bash&quot; style=&quot;background-color:#282828;color:#fdf4c1aa;&quot; class=&quot;language-bash &quot;&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span style=&quot;color:#fdf4c1;&quot;&gt;$ kmodsign sha512 MOK.key MOK.cer module.ko module.ko
+&lt;&#x2F;span&gt;&lt;span style=&quot;font-style:italic;color:#928374;&quot;&gt;# here we are signing the module.ko using the MOK.key
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;hr &#x2F;&gt;
+&lt;h2 id=&quot;alternatives-to-self-signing&quot;&gt;Alternatives to self-signing&lt;&#x2F;h2&gt;
+&lt;p&gt;Now, you must be wondering, are there any other alternatives to self signing, definitly!. But for thing alternatives you lose the freedom that is granted to you by the self-signing technique. The alternatives are &lt;&#x2F;p&gt;
+&lt;ul&gt;
+&lt;li&gt;shim&lt;&#x2F;li&gt;
+&lt;li&gt;PreLoader&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;p&gt;There are other methods but shim it the one used in ubuntu to make it possible to boot into ubuntu even if the secure boot in on. i.e. because the ubuntu bootloader is signed by microsoft which grants to access to boot into the computer.&lt;&#x2F;p&gt;
+&lt;hr &#x2F;&gt;
+&lt;h4 id=&quot;resources&quot;&gt;Resources&lt;&#x2F;h4&gt;
+&lt;p&gt;Please Do read this amazing blog post on&lt;&#x2F;p&gt;
+&lt;p&gt;: &lt;a href=&quot;https:&#x2F;&#x2F;nishantjoshi00.github.io&#x2F;blog&#x2F;college&#x2F;handling-secure-boot&#x2F;ubuntu.com&#x2F;blog&#x2F;how-to-sign-things-for-secure-boot&quot;&gt;how-to-sign-things-for-secure-boot&lt;&#x2F;a&gt;&lt;&#x2F;p&gt;
+&lt;hr &#x2F;&gt;
+&lt;p&gt;Done !!&lt;&#x2F;p&gt;
+</content>
+        
+    </entry>
+</feed>
