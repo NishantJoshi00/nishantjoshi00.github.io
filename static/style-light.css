@@ -1,0 +1,297 @@
+/* Minimalist Modern CSS
+ * A style that maintains the raw HTML aesthetic with modern refinements
+ */
+
+/* Import modern fonts */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&family=Poppins:wght@400;500;600&display=swap');
+
+/* CSS Reset & Base Styles */
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+/* Using system UI as fallback */
+:root {
+  --main-font: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+  --heading-font: 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+  --mono-font: 'JetBrains Mono', 'Courier New', Courier, monospace;
+  
+  /* Colors that feel default but are slightly refined */
+  --text-color: #111;
+  --bg-color: #fff;
+  --link-color: #0066cc; /* Slightly softer than default blue */
+  --link-visited: #551a8b; /* Traditional but softened */
+  --border-color: #d1d1d1;
+  --input-bg: #f9f9f9;
+  --button-bg: #e9e9e9;
+  --button-hover: #ddd;
+  
+  /* Fibonacci-based scale (1, 1, 2, 3, 5, 8, 13, 21, 34) */
+  --space-1: 0.25rem; /* 4px */
+  --space-2: 0.5rem;  /* 8px */
+  --space-3: 0.75rem; /* 12px */
+  --space-5: 1.25rem; /* 20px */
+  --space-8: 2rem;    /* 32px */
+  --space-13: 3.25rem; /* 52px */
+  
+  /* Font sizes using Fibonacci sequence */
+  --text-xs: 0.75rem;  /* 12px */
+  --text-sm: 0.875rem; /* 14px */
+  --text-base: 1rem;   /* 16px */
+  --text-md: 1.125rem; /* 18px */
+  --text-lg: 1.375rem; /* 22px */
+  --text-xl: 1.625rem; /* 26px */
+  --text-2xl: 2rem;    /* 32px */
+  --text-3xl: 2.625rem; /* 42px */
+  
+  /* Maximum content width */
+  --content-width: 42rem; /* ~672px */
+}
+
+/* Base HTML elements */
+html {
+  font-size: 100%;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  font-family: var(--main-font);
+  font-size: var(--text-base);
+  line-height: 1.6;
+  color: var(--text-color);
+  background-color: var(--bg-color);
+  margin: 0;
+  padding: var(--space-5);
+}
+
+/* Container for content */
+main, article, section, header, footer, div {
+  width: 100%;
+  max-width: var(--content-width);
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* Typography - based on Fibonacci sequence */
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--heading-font);
+  font-weight: 500;
+  line-height: 1.3;
+  margin-top: var(--space-8);
+  margin-bottom: var(--space-3);
+}
+
+h1 {
+  font-size: var(--text-3xl);
+}
+
+h2 {
+  font-size: var(--text-2xl);
+}
+
+h3 {
+  font-size: var(--text-xl);
+}
+
+h4 {
+  font-size: var(--text-lg);
+}
+
+h5 {
+  font-size: var(--text-md);
+}
+
+h6 {
+  font-size: var(--text-base);
+}
+
+p {
+  margin-top: var(--space-3);
+  margin-bottom: var(--space-3);
+}
+
+/* Basic spacing */
+ul, ol {
+  padding-left: var(--space-8);
+  margin: var(--space-3) 0;
+}
+
+li {
+  margin-bottom: var(--space-2);
+}
+
+blockquote {
+  margin: var(--space-5) 0;
+  padding-left: var(--space-5);
+  border-left: 3px solid var(--border-color);
+  color: #555;
+}
+
+code, pre {
+  font-family: var(--mono-font);
+  font-size: var(--text-sm);
+}
+
+pre {
+  overflow-x: auto;
+  padding: var(--space-3);
+  background-color: var(--input-bg);
+  border: 1px solid var(--border-color);
+  border-radius: 2px;
+}
+
+/* Links - maintained blue but refined */
+a {
+  color: var(--link-color);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  transition: color 0.2s ease;
+}
+
+a:visited {
+  color: var(--link-visited);
+}
+
+a:hover {
+  text-decoration: none;
+}
+
+/* Form elements - clean and simple */
+input, textarea, select {
+  font-family: var(--main-font);
+  font-size: var(--text-base);
+  padding: var(--space-2);
+  border: 1px solid var(--border-color);
+  border-radius: 2px;
+  background-color: var(--input-bg);
+  width: 100%;
+  margin-bottom: var(--space-3);
+}
+
+button, input[type="submit"], input[type="button"] {
+  font-family: var(--main-font);
+  font-size: var(--text-base);
+  background-color: var(--button-bg);
+  border: 1px solid var(--border-color);
+  border-radius: 2px;
+  padding: var(--space-2) var(--space-5);
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+button:hover, input[type="submit"]:hover, input[type="button"]:hover {
+  background-color: var(--button-hover);
+}
+
+/* Tables - simple with minimal styling */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: var(--space-5) 0;
+}
+
+th, td {
+  padding: var(--space-2);
+  border-bottom: 1px solid var(--border-color);
+  text-align: left;
+}
+
+th {
+  font-weight: 500;
+}
+
+/* Images */
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+  margin: var(--space-5) 0;
+}
+
+figure {
+  margin: var(--space-5) 0;
+}
+
+figcaption {
+  font-size: var(--text-sm);
+  color: #555;
+  text-align: center;
+  margin-top: var(--space-2);
+}
+
+/* Horizontal rule */
+hr {
+  border: 0;
+  border-top: 1px solid var(--border-color);
+  margin: var(--space-8) 0;
+}
+
+/* Helper classes */
+.mono {
+  font-family: var(--mono-font);
+}
+
+.text-center {
+  text-align: center;
+}
+
+.full-width {
+  width: 100%;
+  max-width: none;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  :root {
+    --content-width: 100%;
+  }
+  
+  body {
+    padding: var(--space-3);
+  }
+  
+  h1 {
+    font-size: var(--text-2xl);
+  }
+  
+  h2 {
+    font-size: var(--text-xl);
+  }
+  
+  h3 {
+    font-size: var(--text-lg);
+  }
+}
+
+@media (max-width: 480px) {
+  html {
+    font-size: 95%;
+  }
+  
+  body {
+    padding: var(--space-2);
+  }
+  
+  ul, ol {
+    padding-left: var(--space-5);
+  }
+}
+
+/* Print styles */
+@media print {
+  body {
+    color: black;
+    background-color: white;
+  }
+  
+  a {
+    color: black;
+    text-decoration: underline;
+  }
+  
+  a[href]:after {
+    content: " (" attr(href) ")";
+    font-size: var(--text-sm);
+    color: #555;
+  }
+}
