@@ -34,6 +34,7 @@
   --space-8: 2rem;    /* 32px */
   --space-13: 3.25rem; /* 52px */
   
+
   /* Font sizes using Fibonacci sequence */
   --text-xs: 0.75rem;  /* 12px */
   --text-sm: 0.875rem; /* 14px */
@@ -43,6 +44,7 @@
   --text-xl: 1.625rem; /* 26px */
   --text-2xl: 2rem;    /* 32px */
   --text-3xl: 2.625rem; /* 42px */
+
   
   /* Maximum content width */
   --content-width: 42rem; /* ~672px */
@@ -294,4 +296,41 @@ hr {
     font-size: var(--text-sm);
     color: #555;
   }
+}
+
+/* Horizontal rule - refined and narrower */
+hr {
+  border: 0;
+  height: 1px;
+  background-color: var(--border-color);
+  width: 50%;
+  margin: var(--space-8) auto;
+  opacity: 0.7;
+}
+
+/* Variations you might want to use */
+hr.text-aligned {
+  margin-left: 0;
+  margin-right: auto;
+  width: 40%;
+}
+
+hr.subtle {
+  height: 1px;
+  background: linear-gradient(
+    to right,
+    transparent,
+    var(--border-color) 20%,
+    var(--border-color) 80%,
+    transparent
+  );
+}
+
+hr.short {
+  width: 25%;
+}
+
+/* Add this to style-dark.css only */
+hr.subtle {
+  opacity: 0.4;
 }
