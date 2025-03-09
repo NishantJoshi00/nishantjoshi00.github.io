@@ -228,8 +228,8 @@
         }
         
         @keyframes blink {
-            0%, 100% { opacity: 0; }
-            50% { opacity: 1; }
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.6; }
         }
         
         @keyframes flicker {
@@ -283,6 +283,22 @@
             align-items: center;
             background-color: rgba(0, 10, 0, 0.9);
             z-index: 100;
+            transition: opacity 0.8s;
+        }
+        
+        .panic-text {
+            color: #ff3000;
+            animation: blink 1s infinite;
+        }
+        
+        .cursor-blink {
+            display: inline-block;
+            width: 0.8em;
+            height: 1em;
+            background-color: #ff3000;
+            margin-left: 4px;
+            vertical-align: middle;
+            animation: blink 1s infinite;
         }
         
         .loader {
@@ -328,6 +344,22 @@
             margin-top: 15px;
             font-size: 16px;
             color: #cc9900;
+        }
+        
+        @keyframes glitchHorizontal {
+            0% { transform: translate(0); }
+            1% { transform: translate(-2px, 2px); }
+            2% { transform: translate(2px, -2px); }
+            3% { transform: translate(0); }
+            10% { transform: translate(0); }
+            11% { transform: translate(-2px, 2px); }
+            12% { transform: translate(2px, -2px); }
+            13% { transform: translate(0); }
+            100% { transform: translate(0); }
+        }
+        
+        .glitch {
+            animation: glitchHorizontal 3s infinite;
         }
     </style>
 </head>
@@ -435,6 +467,10 @@
                             progress = 95;
                             progressBar.style.width = progress + '%';
                             loadingInfo.textContent = "WASM loaded! Starting terminal...";
+                        } else {
+                            // If WASM failed, show that in the loading screen
+                            loadingInfo.textContent = "WASM module not found...";
+                            loadingInfo.style.color = "#ff3000";
                         }
                     });
                 }
@@ -446,11 +482,11 @@
                 
                 if (progress < 30) {
                     loadingInfo.textContent = "Initializing system...";
-                } else if (progress < 60) {
+                } else if (progress < 60 && !wasmChecked) {
                     loadingInfo.textContent = "Loading WASM modules...";
-                } else if (progress < 90) {
+                } else if (progress < 90 && wasmLoaded) {
                     loadingInfo.textContent = "Preparing terminal environment...";
-                } else {
+                } else if (progress >= 90 && wasmLoaded) {
                     loadingInfo.textContent = "Almost ready...";
                 }
                 
@@ -593,78 +629,143 @@
         function initTerminal() {
             outputDiv.innerHTML += '<div class="loading">Initializing system... Please wait...</div>';
             
-            // Define boot messages - shorter set if WASM loaded
-            const bootMessages = wasmLoaded ? 
-            [
-                "ACME-OS v1.4 BIOS\n",
-                "Copyright (c) 1976-2025\n\n",
-                "System check: All components OK\n",
-                "WASM module: Loaded\n",
-                "Terminal Ready...\n"
-            ] : [
-                "ACME-OS v1.4 BIOS\n",
-                "Copyright (c) 1976-2025\n\n",
-                "Performing system check...\n",
-                "RAM Test............. [OK]\n",
-                "CPU Test............. [OK]\n",
-                "Floppy Drive......... [NOT FOUND]\n",
-                "Hard Drive........... [OK]\n",
-                "Display Adapter...... [OK]\n\n",
-                "Initializing memory management...\n",
-                "Loading WASM terminal handler...\n"
-            ];
-            
             // Wait for WASM load promise to resolve before proceeding
             Promise.resolve(wasmLoadPromise).then(wasmStatus => {
                 // Remove loading message
                 document.querySelector('.loading').remove();
                 
-                // Determine speed based on WASM loading status
-                const typingSpeed = wasmLoaded ? 5 : 30; // Faster if WASM is loaded
-                const messageDelay = wasmLoaded ? 50 : 200; // Faster delay between messages if WASM is loaded
-                
-                // Display boot sequence with typewriter effect
-                let messageIndex = 0;
-                let charIndex = 0;
-                
-                function typeNextChar() {
-                    if (messageIndex < bootMessages.length) {
-                        const currentMessage = bootMessages[messageIndex];
-                        
-                        if (charIndex < currentMessage.length) {
-                            // Append next character
-                            appendOutput(currentMessage[charIndex], false);
-                            charIndex++;
-                            setTimeout(typeNextChar, Math.random() * typingSpeed + typingSpeed/2);
-                        } else {
-                            // Move to next message
-                            messageIndex++;
-                            charIndex = 0;
-                            setTimeout(typeNextChar, messageDelay);
-                        }
-                    } else {
-                        // Boot sequence complete, finalize setup
-                        finalizeTerminalSetup();
-                    }
+                if (wasmLoaded) {
+                    // WASM loaded successfully - skip directly to terminal
+                    appendOutput("ACME-OS v1.4 initialized with WASM support\n\n", true);
+                    
+                    // Enable terminal immediately
+                    finalizeTerminalSetup();
+                } else {
+                    // WASM failed to load - show kernel panic
+                    showKernelPanic();
                 }
                 
-                // Start boot sequence
-                typeNextChar();
-                
-                // Add CRT noise effect
+                // Add CRT noise effect regardless
                 addNoiseEffect();
             });
         }
         
-        // Finalize terminal setup after boot sequence
-        function finalizeTerminalSetup() {
-            // Different message based on WASM status
-            if (wasmLoaded) {
-                appendOutput("\nWASM module loaded successfully!\n", true);
-            } else {
-                appendOutput("\nWASM module not available or still loading.\n", true);
-                appendOutput("Running in compatibility mode.\n", true);
+        // Show a kernel panic screen with no recovery
+        function showKernelPanic() {
+            const panicMessages = [
+                "\n\n\n",
+                "************************************\n",
+                "**        KERNEL PANIC           **\n",
+                "************************************\n\n",
+                "FATAL ERROR: WASM module not loaded\n",
+                "System halted at address 0xDEADBEEF\n\n",
+                "Stack trace:\n",
+                "0x80FF234: wasm_load_failed()\n",
+                "0x80FF123: init_subsystems()\n",
+                "0x80FE001: main()\n\n",
+                "SYSTEM HALTED\n\n"
+            ];
+            
+            // Display panic with a typewriter effect (but faster)
+            let messageIndex = 0;
+            let charIndex = 0;
+            
+            function typePanic() {
+                if (messageIndex < panicMessages.length) {
+                    const currentMessage = panicMessages[messageIndex];
+                    
+                    if (charIndex < currentMessage.length) {
+                        appendOutput(currentMessage[charIndex], false);
+                        charIndex++;
+                        
+                        // Type very fast
+                        setTimeout(typePanic, Math.random() * 5 + 2);
+                    } else {
+                        messageIndex++;
+                        charIndex = 0;
+                        setTimeout(typePanic, 50);
+                    }
+                } else {
+                    // After showing the panic, add a blinking cursor
+                    addBlinkingCursor();
+                    
+                    // Occasionally add glitch effects
+                    addRandomGlitches();
+                }
             }
+            
+            // Start typing the panic screen
+            typePanic();
+        }
+        
+        // Add a blinking cursor after kernel panic
+        function addBlinkingCursor() {
+            const cursor = document.createElement('div');
+            cursor.className = 'cursor-blink';
+            outputDiv.appendChild(cursor);
+            
+            // Occasionally add random characters near the cursor
+            setInterval(() => {
+                if (Math.random() < 0.1) {
+                    const glitchChars = '@#$%&*!?_-+=~';
+                    const char = glitchChars[Math.floor(Math.random() * glitchChars.length)];
+                    
+                    const glitchSpan = document.createElement('span');
+                    glitchSpan.textContent = char;
+                    glitchSpan.style.color = '#ff3000';
+                    glitchSpan.style.opacity = '0.8';
+                    
+                    outputDiv.insertBefore(glitchSpan, cursor);
+                    
+                    // Remove it after a short time
+                    setTimeout(() => {
+                        if (outputDiv.contains(glitchSpan)) {
+                            outputDiv.removeChild(glitchSpan);
+                        }
+                    }, 200);
+                }
+            }, 1000);
+        }
+        
+        // Add random glitch effects to the terminal after kernel panic
+        function addRandomGlitches() {
+            // Occasionally add horizontal glitch lines
+            setInterval(() => {
+                if (Math.random() < 0.2) {  // 20% chance every 3 seconds
+                    const glitchLine = document.createElement('div');
+                    glitchLine.style.position = 'absolute';
+                    glitchLine.style.height = '2px';
+                    glitchLine.style.width = '100%';
+                    glitchLine.style.background = 'rgba(255, 48, 0, 0.7)';
+                    glitchLine.style.left = '0';
+                    glitchLine.style.top = Math.floor(Math.random() * terminal.offsetHeight) + 'px';
+                    glitchLine.style.zIndex = '3';
+                    glitchLine.style.pointerEvents = 'none';
+                    terminal.appendChild(glitchLine);
+                    
+                    // Make it flicker a bit before removing
+                    glitchLine.style.animation = 'flicker 0.1s infinite alternate-reverse';
+                    
+                    setTimeout(() => {
+                        terminal.removeChild(glitchLine);
+                    }, 100 + Math.random() * 200);
+                }
+                
+                // Occasionally add screen displacement glitch
+                if (Math.random() < 0.05) {  // 5% chance every 3 seconds
+                    const screenContent = document.querySelector('.crt-screen');
+                    screenContent.classList.add('glitch');
+                    
+                    setTimeout(() => {
+                        screenContent.classList.remove('glitch');
+                    }, 500);
+                }
+            }, 3000);
+        }
+        
+        // Finalize terminal setup after boot sequence (only used when WASM loads)
+        function finalizeTerminalSetup() {
+            appendOutput("\nWASM module loaded successfully!\n", true);
             
             // Enable the command line interface
             setTimeout(() => {
@@ -684,10 +785,6 @@
                 let messageIndex = 0;
                 let charIndex = 0;
                 
-                // Speed up welcome message if WASM is loaded
-                const messageSpeed = wasmLoaded ? 5 : 20;
-                const delayBetween = wasmLoaded ? 50 : 150;
-                
                 function typeWelcome() {
                     if (messageIndex < welcomeMessages.length) {
                         const currentMessage = welcomeMessages[messageIndex];
@@ -695,17 +792,17 @@
                         if (charIndex < currentMessage.length) {
                             appendOutput(currentMessage[charIndex], false);
                             charIndex++;
-                            setTimeout(typeWelcome, Math.random() * messageSpeed + 2);
+                            setTimeout(typeWelcome, Math.random() * 5 + 2);
                         } else {
                             messageIndex++;
                             charIndex = 0;
-                            setTimeout(typeWelcome, delayBetween);
+                            setTimeout(typeWelcome, 50);
                         }
                     }
                 }
                 
                 typeWelcome();
-            }, wasmLoaded ? 500 : 1000); // Shorter delay if WASM loaded
+            }, 500);
         }
 
         // Append text to the output div
