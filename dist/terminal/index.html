@@ -1,0 +1,799 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Web Terminal</title>
+    <style>
+        @font-face {
+            font-family: 'VT323';
+            src: url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/webfonts/VT323-Regular.ttf') format('truetype');
+            font-display: swap;
+        }
+        
+        html, body {
+            margin: 0;
+            padding: 0;
+            background-color: #000;
+            height: 100%;
+            width: 100%;
+            overflow: hidden;
+            font-family: 'VT323', 'Courier New', monospace;
+            color: #ffb000;
+        }
+        
+        body::before {
+            content: "";
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at center, rgba(11, 22, 11, 0.1) 0%, rgba(0, 0, 0, 0.4) 100%);
+            pointer-events: none;
+            z-index: 2;
+        }
+        
+        .crt-frame {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            transform: none;
+            width: 100%;
+            height: 100%;
+            background-color: #222;
+            border-radius: 0;
+            border: none;
+            box-shadow: none;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            perspective: 1000px;
+            z-index: 1;
+            overflow: hidden;
+        }
+        
+        .crt-screen {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            border-radius: 0;
+            background-color: #000;
+            box-shadow: 
+                inset 0 0 10px rgba(20, 15, 0, 0.8),
+                0 0 20px rgba(255, 176, 0, 0.2);
+            transform: none;
+        }
+        
+        .scanlines {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                linear-gradient(
+                    to bottom,
+                    transparent 0%,
+                    rgba(255, 176, 0, 0.05) 50%,
+                    transparent 51%
+                );
+            background-size: 100% 4px;
+            z-index: 1;
+            pointer-events: none;
+            opacity: 0.4;
+        }
+        
+        .crt-glow {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                radial-gradient(
+                    ellipse at center,
+                    rgba(255, 176, 0, 0.1) 0%,
+                    rgba(30, 20, 0, 0.2) 80%,
+                    rgba(0, 0, 0, 0.5) 100%
+                );
+            pointer-events: none;
+            z-index: 1;
+            mix-blend-mode: screen;
+        }
+        
+        .terminal-container {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            z-index: 0;
+        }
+        
+        .terminal-header {
+            background: linear-gradient(to right, #332200, #221100);
+            padding: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid #ffb000;
+            border-top-left-radius: 20px;
+            border-top-right-radius: 20px;
+        }
+        
+        .terminal-header .title {
+            font-weight: bold;
+            font-size: 20px;
+            color: #ffb000;
+            text-shadow: 0 0 5px #ffb000;
+            letter-spacing: 1px;
+        }
+        
+        .terminal-buttons {
+            display: flex;
+            gap: 8px;
+        }
+        
+        .terminal-button {
+            width: 14px;
+            height: 14px;
+            border-radius: 50%;
+            border: 1px solid #ffb000;
+            box-shadow: 0 0 4px rgba(255, 176, 0, 0.5);
+        }
+        
+        .close-button { background-color: #900; }
+        .minimize-button { background-color: #990; }
+        .maximize-button { background-color: #090; }
+        
+        .terminal-body {
+            background-color: rgba(0, 10, 0, 0.7);
+            flex-grow: 1;
+            padding: 20px;
+            font-size: 20px;
+            line-height: 1.4;
+            overflow-y: auto;
+            position: relative;
+            text-shadow: 0 0 2px #ffb000;
+            border-radius: 0;
+            width: 100%;
+            box-sizing: border-box;
+        }
+        
+        .terminal-body::-webkit-scrollbar {
+            width: 12px;
+        }
+        
+        .terminal-body::-webkit-scrollbar-track {
+            background: #110a00;
+            border-radius: 10px;
+        }
+        
+        .terminal-body::-webkit-scrollbar-thumb {
+            background: #663300;
+            border-radius: 10px;
+            border: 2px solid #110a00;
+        }
+        
+        .terminal-body::-webkit-scrollbar-thumb:hover {
+            background: #996600;
+        }
+        
+        .command-line {
+            display: flex;
+            align-items: center;
+            margin: 4px 0;
+            display: none; /* Initially hidden until WASM is loaded */
+        }
+        
+        .prompt {
+            color: #ffb000;
+            margin-right: 10px;
+            white-space: nowrap;
+            text-shadow: 0 0 5px #ffb000;
+        }
+        
+        #output {
+            white-space: pre-wrap;
+            color: #ffb000;
+        }
+        
+        #input {
+            background: transparent;
+            border: none;
+            outline: none;
+            color: #ffb000;
+            font-family: 'VT323', 'Courier New', monospace;
+            font-size: 20px;
+            flex-grow: 1;
+            width: calc(100% - 40px);
+            text-shadow: 0 0 2px #ffb000;
+        }
+        
+        /* Make cursor always visible by default */
+        input {
+            caret-color: #ffb000 !important;
+        }
+        
+        #input:focus {
+            outline: none;
+            border: none;
+            box-shadow: none;
+            caret-color: #ffb000 !important;
+        }
+        
+        @keyframes blink {
+            0%, 100% { opacity: 0; }
+            50% { opacity: 1; }
+        }
+        
+        @keyframes flicker {
+            0% { opacity: 0.97; }
+            5% { opacity: 0.9; }
+            10% { opacity: 0.97; }
+            15% { opacity: 0.92; }
+            20% { opacity: 0.9; }
+            25% { opacity: 0.97; }
+            30% { opacity: 0.95; }
+            35% { opacity: 0.90; }
+            40% { opacity: 0.97; }
+            50% { opacity: 0.93; }
+            60% { opacity: 0.95; }
+            70% { opacity: 0.93; }
+            80% { opacity: 0.94; }
+            90% { opacity: 0.95; }
+            100% { opacity: 0.96; }
+        }
+        
+        .crt-screen {
+            animation: flicker 0.3s infinite alternate-reverse;
+        }
+        
+        .loading {
+            margin: 10px 0;
+            color: #aa8833;
+            animation: pulse 1.5s infinite;
+        }
+        
+        @keyframes pulse {
+            0% { opacity: 0.7; }
+            50% { opacity: 1; }
+            100% { opacity: 0.7; }
+        }
+        
+        .power-button, .power-led {
+            display: none;
+        }
+        
+        /* Loading Screen Styles */
+        .loading-screen {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            background-color: rgba(0, 10, 0, 0.9);
+            z-index: 100;
+        }
+        
+        .loader {
+            width: 60px;
+            height: 60px;
+            border: 5px solid #331100;
+            border-top: 5px solid #ffb000;
+            border-radius: 50%;
+            animation: spin 1.5s linear infinite;
+            margin-bottom: 20px;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        .loading-text {
+            font-size: 24px;
+            color: #ffb000;
+            text-shadow: 0 0 5px #ffb000;
+            letter-spacing: 2px;
+            text-align: center;
+        }
+        
+        .loading-progress {
+            width: 300px;
+            height: 20px;
+            background-color: #331100;
+            margin-top: 20px;
+            border: 2px solid #ffb000;
+            overflow: hidden;
+        }
+        
+        .progress-bar {
+            height: 100%;
+            width: 0%;
+            background-color: #ffb000;
+            transition: width 0.5s;
+        }
+        
+        .loading-info {
+            margin-top: 15px;
+            font-size: 16px;
+            color: #cc9900;
+        }
+    </style>
+</head>
+<body>
+    <div class="crt-frame">
+        <div class="crt-screen">
+            <div class="scanlines"></div>
+            <div class="crt-glow"></div>
+            
+            <!-- Loading Screen -->
+            <div class="loading-screen" id="loadingScreen">
+                <div class="loader"></div>
+                <div class="loading-text">LOADING WASM MODULE...</div>
+                <div class="loading-progress">
+                    <div class="progress-bar" id="progressBar"></div>
+                </div>
+                <div class="loading-info" id="loadingInfo">Initializing system...</div>
+            </div>
+            
+            <div class="terminal-container">
+                <div class="terminal-header">
+                    <div class="terminal-buttons">
+                        <div class="terminal-button close-button"></div>
+                        <div class="terminal-button minimize-button"></div>
+                        <div class="terminal-button maximize-button"></div>
+                    </div>
+                    <div class="title">ACME TERMINAL v1.3 - FULLSCREEN MODE</div>
+                    <div style="width: 50px"></div>
+                </div>
+                <div class="terminal-body" id="terminal">
+                    <div id="output"></div>
+                    <div class="command-line" id="commandLine">
+                        <span class="prompt">user@acme:~$</span>
+                        <input type="text" id="input" disabled />
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="power-button"></div>
+        <div class="power-led"></div>
+    </div>
+
+    <script>
+        let wasmInstance = null;
+        let wasmMemory = null;
+        const outputDiv = document.getElementById('output');
+        const inputField = document.getElementById('input');
+        const terminal = document.getElementById('terminal');
+        const commandLine = document.getElementById('commandLine');
+        const loadingScreen = document.getElementById('loadingScreen');
+        const progressBar = document.getElementById('progressBar');
+        const loadingInfo = document.getElementById('loadingInfo');
+        
+        // Simulate loading progress
+        function simulateLoading() {
+            let progress = 0;
+            const interval = setInterval(() => {
+                progress += Math.random() * 5;
+                if (progress > 100) progress = 100;
+                
+                progressBar.style.width = progress + '%';
+                
+                if (progress < 30) {
+                    loadingInfo.textContent = "Initializing system...";
+                } else if (progress < 60) {
+                    loadingInfo.textContent = "Loading WASM modules...";
+                } else if (progress < 90) {
+                    loadingInfo.textContent = "Preparing terminal environment...";
+                } else {
+                    loadingInfo.textContent = "Almost ready...";
+                }
+                
+                if (progress >= 100) {
+                    clearInterval(interval);
+                    setTimeout(() => {
+                        powerOnEffect();
+                    }, 1000);
+                }
+            }, 200);
+        }
+        
+        // Start the loading process when page loads
+        window.addEventListener('DOMContentLoaded', () => {
+            simulateLoading();
+        });
+        
+        // Add CRT power on effect
+        function powerOnEffect() {
+            // Hide loading screen
+            loadingScreen.style.opacity = '0';
+            setTimeout(() => {
+                loadingScreen.style.display = 'none';
+            }, 800);
+            
+            const crtScreen = document.querySelector('.crt-screen');
+            crtScreen.style.opacity = '0';
+            crtScreen.style.filter = 'brightness(0)';
+            
+            // Simulate powering on the CRT
+            setTimeout(() => {
+                // CRT warm up effect
+                crtScreen.style.transition = 'opacity 0.8s ease-in, filter 2s ease-in';
+                crtScreen.style.opacity = '1';
+                crtScreen.style.filter = 'brightness(1)';
+                
+                // Add scan line effect during power-on
+                const scanLine = document.createElement('div');
+                scanLine.style.position = 'absolute';
+                scanLine.style.left = '0';
+                scanLine.style.width = '100%';
+                scanLine.style.height = '20px';
+                scanLine.style.background = 'rgba(255, 176, 0, 0.3)';
+                scanLine.style.boxShadow = '0 0 10px rgba(255, 176, 0, 0.5)';
+                scanLine.style.zIndex = '2';
+                crtScreen.appendChild(scanLine);
+                
+                // Animate scan line from top to bottom
+                let pos = 0;
+                const scanLineAnim = setInterval(() => {
+                    pos += 10;
+                    scanLine.style.top = pos + 'px';
+                    if (pos > crtScreen.offsetHeight) {
+                        clearInterval(scanLineAnim);
+                        crtScreen.removeChild(scanLine);
+                        // Initialize terminal after power-on effect
+                        initTerminal();
+                    }
+                }, 20);
+            }, 500);
+        }
+        
+        // CRT noise effect
+        function addNoiseEffect() {
+            const noise = document.createElement('div');
+            noise.style.position = 'absolute';
+            noise.style.top = '0';
+            noise.style.left = '0';
+            noise.style.width = '100%';
+            noise.style.height = '100%';
+            noise.style.zIndex = '1';
+            noise.style.pointerEvents = 'none';
+            noise.style.opacity = '0.03';
+            document.querySelector('.crt-screen').appendChild(noise);
+            
+            function generateNoise() {
+                let html = '';
+                const characters = '.:-+*=%@#';
+                
+                for (let i = 0; i < 1000; i++) {
+                    const char = characters[Math.floor(Math.random() * characters.length)];
+                    const x = Math.random() * 100;
+                    const y = Math.random() * 100;
+                    const size = Math.random() * 1 + 0.5;
+                    const opacity = Math.random() * 0.3;
+                    
+                    html += `<div style="position:absolute; top:${y}%; left:${x}%; 
+                        font-size:${size}px; opacity:${opacity}; color:#ffb000;">${char}</div>`;
+                }
+                
+                noise.innerHTML = html;
+            }
+            
+            // Generate noise initially and then at intervals
+            generateNoise();
+            setInterval(generateNoise, 500);
+        }
+
+        // Function to convert string to Uint8Array for WASM
+        function stringToUint8Array(str) {
+            const encoder = new TextEncoder();
+            return encoder.encode(str);
+        }
+
+        // Function to convert Uint8Array from WASM to string
+        function uint8ArrayToString(array) {
+            const decoder = new TextDecoder();
+            return decoder.decode(array);
+        }
+        
+        // Add CRT effect to text when appending output
+        function addCrtTextEffect(text) {
+            // Randomly add slight corruption to some characters
+            const glitchChance = 0.01; // 1% chance per character
+            let glitchedText = '';
+            
+            for (let i = 0; i < text.length; i++) {
+                if (Math.random() < glitchChance && text[i] !== '\n') {
+                    // Either replace with a glitch character or add a flicker span
+                    if (Math.random() < 0.5) {
+                        const glitchChars = '@#$%&*!?_-+=~';
+                        glitchedText += glitchChars[Math.floor(Math.random() * glitchChars.length)];
+                    } else {
+                        glitchedText += `<span style="animation: flicker 0.2s infinite alternate-reverse;">${text[i]}</span>`;
+                    }
+                } else {
+                    glitchedText += text[i];
+                }
+            }
+            
+            return glitchedText;
+        }
+
+        // Initialize the terminal
+        function initTerminal() {
+            outputDiv.innerHTML += '<div class="loading">Initializing system... Please wait...</div>';
+            
+            // Simulate typewriter-style loading sequence
+            const bootMessages = [
+                "ACME-OS v1.4 BIOS\n",
+                "Copyright (c) 1976-2025\n\n",
+                "Performing system check...\n",
+                "RAM Test............. [OK]\n",
+                "CPU Test............. [OK]\n",
+                "Floppy Drive......... [NOT FOUND]\n",
+                "Hard Drive........... [OK]\n",
+                "Display Adapter...... [OK]\n\n",
+                "Initializing memory management...\n",
+                "Loading WASM terminal handler...\n"
+            ];
+            
+            // Display boot sequence with typewriter effect
+            let messageIndex = 0;
+            let charIndex = 0;
+            
+            function typeNextChar() {
+                if (messageIndex < bootMessages.length) {
+                    const currentMessage = bootMessages[messageIndex];
+                    
+                    if (charIndex < currentMessage.length) {
+                        // Append next character with random delay to simulate realistic typing
+                        appendOutput(currentMessage[charIndex], false);
+                        charIndex++;
+                        setTimeout(typeNextChar, Math.random() * 50 + 10);
+                    } else {
+                        // Move to next message
+                        messageIndex++;
+                        charIndex = 0;
+                        setTimeout(typeNextChar, 200);
+                    }
+                } else {
+                    // Boot sequence complete, load the WASM module
+                    loadWasmModule();
+                }
+            }
+            
+            setTimeout(() => {
+                // Remove loading message
+                document.querySelector('.loading').remove();
+                // Start boot sequence
+                typeNextChar();
+            }, 1000);
+            
+            // Add CRT noise effect
+            addNoiseEffect();
+        }
+        
+        // Load the WASM module
+        function loadWasmModule() {
+            // Display a waiting message while attempting to fetch WASM
+            appendOutput("\nAttempting to load WASM module...\n", true);
+            
+            // Fetch and instantiate the WASM module
+            fetch('/terminal/terminal_handler.wasm')
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error(`Failed to fetch WASM: ${response.status} ${response.statusText}`);
+                    }
+                    return response.arrayBuffer();
+                })
+                .then(bytes => {
+                    appendOutput("\nWASM module loaded successfully!\n", true);
+                    
+                    return WebAssembly.instantiate(bytes, {
+                        env: {
+                            printToConsole: function(ptr, len) {
+                                const array = new Uint8Array(wasmMemory.buffer, ptr, len);
+                                const output = uint8ArrayToString(array);
+                                appendOutput(output);
+                            }
+                        }
+                    });
+                })
+                .then(result => {
+                    wasmInstance = result.instance;
+                    wasmMemory = wasmInstance.exports.memory;
+                    
+                    // Show success message
+                    appendOutput("\nWASM initialized successfully!\n", true);
+                    
+                    // Enable the command line interface
+                    setTimeout(() => {
+                        // Enable command line and input field
+                        commandLine.style.display = 'flex';
+                        inputField.disabled = false;
+                        inputField.focus();
+                        
+                        // Display welcome message with typewriter effect
+                        const welcomeMessages = [
+                            "\n\nACME-TERMINAL v2.3 Ready\n",
+                            "© 1983-2025 ACME Corporation\n",
+                            "All Rights Reserved\n\n",
+                            "Type 'help' for available commands.\n\n"
+                        ];
+                        
+                        let messageIndex = 0;
+                        let charIndex = 0;
+                        
+                        function typeWelcome() {
+                            if (messageIndex < welcomeMessages.length) {
+                                const currentMessage = welcomeMessages[messageIndex];
+                                
+                                if (charIndex < currentMessage.length) {
+                                    appendOutput(currentMessage[charIndex], false);
+                                    charIndex++;
+                                    setTimeout(typeWelcome, Math.random() * 30 + 5);
+                                } else {
+                                    messageIndex++;
+                                    charIndex = 0;
+                                    setTimeout(typeWelcome, 150);
+                                }
+                            }
+                        }
+                        
+                        typeWelcome();
+                    }, 1000);
+                })
+                .catch(error => {
+                    appendOutput(`\nError loading WASM: ${error.message}\n`, true);
+                    appendOutput('WASM module not available or not supported.\n\n', true);
+                    appendOutput('Please wait for the WASM module to be properly configured.\n', true);
+                });
+        }
+
+        // Append text to the output div
+        function appendOutput(text, skipEffects = true) {
+            // Apply CRT text effects if not skipped
+            const processedText = skipEffects ? text : addCrtTextEffect(text);
+            
+            if (text.includes('##CLEAR##')) {
+                // Special token to clear the terminal
+                outputDiv.innerHTML = '';
+            } else {
+                outputDiv.innerHTML += processedText.replace(/\n/g, '<br>');
+                
+                // Random CRT glitch effect occasionally
+                if (Math.random() < 0.1 && skipEffects) {
+                    setTimeout(() => {
+                        const glitchLine = document.createElement('div');
+                        glitchLine.style.position = 'absolute';
+                        glitchLine.style.height = '2px';
+                        glitchLine.style.width = '100%';
+                        glitchLine.style.background = 'rgba(255, 176, 0, 0.7)';
+                        glitchLine.style.left = '0';
+                        glitchLine.style.top = Math.floor(Math.random() * terminal.offsetHeight) + 'px';
+                        glitchLine.style.zIndex = '3';
+                        glitchLine.style.pointerEvents = 'none';
+                        terminal.appendChild(glitchLine);
+                        
+                        setTimeout(() => {
+                            terminal.removeChild(glitchLine);
+                        }, 100 + Math.random() * 200);
+                    }, Math.random() * 1000);
+                }
+            }
+            
+            terminal.scrollTop = terminal.scrollHeight;
+        }
+        
+        // Process commands using WASM
+        function processCommand(command) {
+            // Check if WASM is available
+            if (!wasmInstance) {
+                appendOutput("Terminal is still initializing. Please wait for WASM module to load.\n");
+                return;
+            }
+
+            try {
+                // Allocate memory for the command string
+                const commandBuffer = stringToUint8Array(command);
+                const ptr = wasmInstance.exports.allocateMemory(commandBuffer.length + 1);
+                
+                // Copy the string to WASM memory
+                const memory = new Uint8Array(wasmMemory.buffer);
+                memory.set(commandBuffer, ptr);
+                memory[ptr + commandBuffer.length] = 0; // Null terminator
+                
+                // Process the command
+                wasmInstance.exports.processCommand(ptr);
+                
+                // Free the allocated memory
+                wasmInstance.exports.freeMemory(ptr);
+            } catch (error) {
+                appendOutput(`Error processing command: ${error.message}\n`);
+                appendOutput("The WASM module might not be fully initialized.\n");
+            }
+        }
+        
+        // Create command history functionality
+        const commandHistory = [];
+        let historyIndex = -1;
+        
+        // Handle input when Enter is pressed
+        inputField.addEventListener('keydown', function(event) {
+            if (event.key === 'Enter') {
+                const command = inputField.value;
+                
+                // Add command to history if not empty
+                if (command.trim() !== '') {
+                    commandHistory.push(command);
+                    // Limit history size
+                    if (commandHistory.length > 50) {
+                        commandHistory.shift();
+                    }
+                }
+                
+                // Reset history navigation
+                historyIndex = -1;
+                
+                // Echo command
+                appendOutput(`<span class="prompt">user@acme:~$</span> ${command}\n`);
+                inputField.value = '';
+                
+                // Process command
+                processCommand(command);
+                
+                // Refocus input after processing
+                setTimeout(() => {
+                    const input = document.getElementById('input');
+                    if (input) input.focus();
+                }, 50);
+            } 
+            // Up arrow for command history
+            else if (event.key === 'ArrowUp') {
+                event.preventDefault();
+                
+                if (commandHistory.length > 0) {
+                    // Move up in history or stay at the top
+                    historyIndex = Math.min(commandHistory.length - 1, historyIndex + 1);
+                    inputField.value = commandHistory[commandHistory.length - 1 - historyIndex];
+                    
+                    // Move cursor to end of input
+                    setTimeout(() => {
+                        inputField.selectionStart = inputField.selectionEnd = inputField.value.length;
+                    }, 0);
+                }
+            } 
+            // Down arrow for command history
+            else if (event.key === 'ArrowDown') {
+                event.preventDefault();
+                
+                if (historyIndex > 0) {
+                    // Move down in history
+                    historyIndex--;
+                    inputField.value = commandHistory[commandHistory.length - 1 - historyIndex];
+                    
+                    // Move cursor to end of input
+                    setTimeout(() => {
+                        inputField.selectionStart = inputField.selectionEnd = inputField.value.length;
+                    }, 0);
+                } else if (historyIndex === 0) {
+                    // Clear input when reaching bottom of history
+                    historyIndex = -1;
+                    inputField.value = '';
+                }
+            }
+        });
+    </script>
+</body>
+</html>
