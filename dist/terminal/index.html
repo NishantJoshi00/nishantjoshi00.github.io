@@ -373,6 +373,9 @@
     <script>
         let wasmInstance = null;
         let wasmMemory = null;
+        let wasmLoadPromise = null;
+        let wasmLoaded = false;
+        
         const outputDiv = document.getElementById('output');
         const inputField = document.getElementById('input');
         const terminal = document.getElementById('terminal');
@@ -381,11 +384,62 @@
         const progressBar = document.getElementById('progressBar');
         const loadingInfo = document.getElementById('loadingInfo');
         
+        // Start loading WASM module in the background immediately
+        function startWasmLoading() {
+            // Create a promise for the WASM loading process
+            wasmLoadPromise = fetch('/terminal/terminal_handler.wasm')
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error(`Failed to fetch WASM: ${response.status} ${response.statusText}`);
+                    }
+                    return response.arrayBuffer();
+                })
+                .then(bytes => {
+                    return WebAssembly.instantiate(bytes, {
+                        env: {
+                            printToConsole: function(ptr, len) {
+                                const array = new Uint8Array(wasmMemory.buffer, ptr, len);
+                                const output = uint8ArrayToString(array);
+                                appendOutput(output);
+                            }
+                        }
+                    });
+                })
+                .then(result => {
+                    wasmInstance = result.instance;
+                    wasmMemory = wasmInstance.exports.memory;
+                    wasmLoaded = true;
+                    console.log("WASM loaded successfully!");
+                    return true;
+                })
+                .catch(error => {
+                    console.error('Error loading WASM:', error);
+                    return false;
+                });
+                
+            return wasmLoadPromise; // Return the promise so we can chain actions
+        }
+        
         // Simulate loading progress
         function simulateLoading() {
             let progress = 0;
+            let wasmChecked = false;
             const interval = setInterval(() => {
-                progress += Math.random() * 5;
+                // Check WASM status once we're at 30% loading
+                if (progress >= 30 && !wasmChecked) {
+                    wasmChecked = true;
+                    // Check if WASM is loaded already
+                    Promise.resolve(wasmLoadPromise).then(wasmStatus => {
+                        if (wasmLoaded) {
+                            // If WASM is loaded, jump to 95%
+                            progress = 95;
+                            progressBar.style.width = progress + '%';
+                            loadingInfo.textContent = "WASM loaded! Starting terminal...";
+                        }
+                    });
+                }
+                
+                progress += Math.random() * (wasmLoaded ? 10 : 5); // Faster progress if WASM loaded
                 if (progress > 100) progress = 100;
                 
                 progressBar.style.width = progress + '%';
@@ -404,14 +458,19 @@
                     clearInterval(interval);
                     setTimeout(() => {
                         powerOnEffect();
-                    }, 1000);
+                    }, wasmLoaded ? 300 : 1000); // Much shorter delay if WASM is loaded
                 }
-            }, 200);
+            }, wasmLoaded ? 100 : 200); // Faster interval if WASM loaded
         }
         
-        // Start the loading process when page loads
+        // Start both loading processes when page loads
         window.addEventListener('DOMContentLoaded', () => {
-            simulateLoading();
+            // Start WASM loading immediately
+            startWasmLoading().then(() => {
+                // This will run after WASM loading is attempted
+                // Start loading animation after we know WASM status
+                simulateLoading();
+            });
         });
         
         // Add CRT power on effect
@@ -534,8 +593,15 @@
         function initTerminal() {
             outputDiv.innerHTML += '<div class="loading">Initializing system... Please wait...</div>';
             
-            // Simulate typewriter-style loading sequence
-            const bootMessages = [
+            // Define boot messages - shorter set if WASM loaded
+            const bootMessages = wasmLoaded ? 
+            [
+                "ACME-OS v1.4 BIOS\n",
+                "Copyright (c) 1976-2025\n\n",
+                "System check: All components OK\n",
+                "WASM module: Loaded\n",
+                "Terminal Ready...\n"
+            ] : [
                 "ACME-OS v1.4 BIOS\n",
                 "Copyright (c) 1976-2025\n\n",
                 "Performing system check...\n",
@@ -548,117 +614,98 @@
                 "Loading WASM terminal handler...\n"
             ];
             
-            // Display boot sequence with typewriter effect
-            let messageIndex = 0;
-            let charIndex = 0;
-            
-            function typeNextChar() {
-                if (messageIndex < bootMessages.length) {
-                    const currentMessage = bootMessages[messageIndex];
-                    
-                    if (charIndex < currentMessage.length) {
-                        // Append next character with random delay to simulate realistic typing
-                        appendOutput(currentMessage[charIndex], false);
-                        charIndex++;
-                        setTimeout(typeNextChar, Math.random() * 50 + 10);
-                    } else {
-                        // Move to next message
-                        messageIndex++;
-                        charIndex = 0;
-                        setTimeout(typeNextChar, 200);
-                    }
-                } else {
-                    // Boot sequence complete, load the WASM module
-                    loadWasmModule();
-                }
-            }
-            
-            setTimeout(() => {
+            // Wait for WASM load promise to resolve before proceeding
+            Promise.resolve(wasmLoadPromise).then(wasmStatus => {
                 // Remove loading message
                 document.querySelector('.loading').remove();
+                
+                // Determine speed based on WASM loading status
+                const typingSpeed = wasmLoaded ? 5 : 30; // Faster if WASM is loaded
+                const messageDelay = wasmLoaded ? 50 : 200; // Faster delay between messages if WASM is loaded
+                
+                // Display boot sequence with typewriter effect
+                let messageIndex = 0;
+                let charIndex = 0;
+                
+                function typeNextChar() {
+                    if (messageIndex < bootMessages.length) {
+                        const currentMessage = bootMessages[messageIndex];
+                        
+                        if (charIndex < currentMessage.length) {
+                            // Append next character
+                            appendOutput(currentMessage[charIndex], false);
+                            charIndex++;
+                            setTimeout(typeNextChar, Math.random() * typingSpeed + typingSpeed/2);
+                        } else {
+                            // Move to next message
+                            messageIndex++;
+                            charIndex = 0;
+                            setTimeout(typeNextChar, messageDelay);
+                        }
+                    } else {
+                        // Boot sequence complete, finalize setup
+                        finalizeTerminalSetup();
+                    }
+                }
+                
                 // Start boot sequence
                 typeNextChar();
-            }, 1000);
-            
-            // Add CRT noise effect
-            addNoiseEffect();
+                
+                // Add CRT noise effect
+                addNoiseEffect();
+            });
         }
         
-        // Load the WASM module
-        function loadWasmModule() {
-            // Display a waiting message while attempting to fetch WASM
-            appendOutput("\nAttempting to load WASM module...\n", true);
+        // Finalize terminal setup after boot sequence
+        function finalizeTerminalSetup() {
+            // Different message based on WASM status
+            if (wasmLoaded) {
+                appendOutput("\nWASM module loaded successfully!\n", true);
+            } else {
+                appendOutput("\nWASM module not available or still loading.\n", true);
+                appendOutput("Running in compatibility mode.\n", true);
+            }
             
-            // Fetch and instantiate the WASM module
-            fetch('/terminal/terminal_handler.wasm')
-                .then(response => {
-                    if (!response.ok) {
-                        throw new Error(`Failed to fetch WASM: ${response.status} ${response.statusText}`);
+            // Enable the command line interface
+            setTimeout(() => {
+                // Enable command line and input field
+                commandLine.style.display = 'flex';
+                inputField.disabled = false;
+                inputField.focus();
+                
+                // Display welcome message with typewriter effect
+                const welcomeMessages = [
+                    "\n\nACME-TERMINAL v2.3 Ready\n",
+                    "© 1983-2025 ACME Corporation\n",
+                    "All Rights Reserved\n\n",
+                    "Type 'help' for available commands.\n\n"
+                ];
+                
+                let messageIndex = 0;
+                let charIndex = 0;
+                
+                // Speed up welcome message if WASM is loaded
+                const messageSpeed = wasmLoaded ? 5 : 20;
+                const delayBetween = wasmLoaded ? 50 : 150;
+                
+                function typeWelcome() {
+                    if (messageIndex < welcomeMessages.length) {
+                        const currentMessage = welcomeMessages[messageIndex];
+                        
+                        if (charIndex < currentMessage.length) {
+                            appendOutput(currentMessage[charIndex], false);
+                            charIndex++;
+                            setTimeout(typeWelcome, Math.random() * messageSpeed + 2);
+                        } else {
+                            messageIndex++;
+                            charIndex = 0;
+                            setTimeout(typeWelcome, delayBetween);
+                        }
                     }
-                    return response.arrayBuffer();
-                })
-                .then(bytes => {
-                    appendOutput("\nWASM module loaded successfully!\n", true);
-                    
-                    return WebAssembly.instantiate(bytes, {
-                        env: {
-                            printToConsole: function(ptr, len) {
-                                const array = new Uint8Array(wasmMemory.buffer, ptr, len);
-                                const output = uint8ArrayToString(array);
-                                appendOutput(output);
-                            }
-                        }
-                    });
-                })
-                .then(result => {
-                    wasmInstance = result.instance;
-                    wasmMemory = wasmInstance.exports.memory;
-                    
-                    // Show success message
-                    appendOutput("\nWASM initialized successfully!\n", true);
-                    
-                    // Enable the command line interface
-                    setTimeout(() => {
-                        // Enable command line and input field
-                        commandLine.style.display = 'flex';
-                        inputField.disabled = false;
-                        inputField.focus();
-                        
-                        // Display welcome message with typewriter effect
-                        const welcomeMessages = [
-                            "\n\nACME-TERMINAL v2.3 Ready\n",
-                            "© 1983-2025 ACME Corporation\n",
-                            "All Rights Reserved\n\n",
-                            "Type 'help' for available commands.\n\n"
-                        ];
-                        
-                        let messageIndex = 0;
-                        let charIndex = 0;
-                        
-                        function typeWelcome() {
-                            if (messageIndex < welcomeMessages.length) {
-                                const currentMessage = welcomeMessages[messageIndex];
-                                
-                                if (charIndex < currentMessage.length) {
-                                    appendOutput(currentMessage[charIndex], false);
-                                    charIndex++;
-                                    setTimeout(typeWelcome, Math.random() * 30 + 5);
-                                } else {
-                                    messageIndex++;
-                                    charIndex = 0;
-                                    setTimeout(typeWelcome, 150);
-                                }
-                            }
-                        }
-                        
-                        typeWelcome();
-                    }, 1000);
-                })
-                .catch(error => {
-                    appendOutput(`\nError loading WASM: ${error.message}\n`, true);
-                    appendOutput('WASM module not available or not supported.\n\n', true);
-                    appendOutput('Please wait for the WASM module to be properly configured.\n', true);
-                });
+                }
+                
+                typeWelcome();
+            }, wasmLoaded ? 500 : 1000); // Shorter delay if WASM loaded
         }
 
         // Append text to the output div
@@ -700,7 +747,8 @@
         function processCommand(command) {
             // Check if WASM is available
             if (!wasmInstance) {
-                appendOutput("Terminal is still initializing. Please wait for WASM module to load.\n");
+                appendOutput("WASM module not loaded. Command processing is limited.\n");
+                appendOutput("Try again later or refresh the page.\n");
                 return;
             }
 
