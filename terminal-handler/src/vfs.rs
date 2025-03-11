@@ -1,4 +1,7 @@
-use std::{collections::HashMap, path::PathBuf};
+use std::{
+    collections::{HashMap, HashSet},
+    path::PathBuf,
+};
 
 // Virtual filesystem structure
 pub struct VirtualFS {
@@ -47,7 +50,8 @@ impl VirtualFS {
     pub fn list_dir(&self, path: &str) -> Vec<String> {
         let path = self.normalize_path(path);
 
-        self.files
+        let mut output = self
+            .files
             .keys()
             .filter(|f| f.starts_with(&path))
             .map(|f| f.replace(&path, ""))
@@ -60,7 +64,13 @@ impl VirtualFS {
                     entry.to_string()
                 }
             })
-            .collect::<Vec<String>>()
+            .collect::<HashSet<String>>()
+            .into_iter()
+            .collect::<Vec<_>>();
+
+        output.sort();
+
+        output
     }
 
     pub fn change_dir(&mut self, path: &str) {
