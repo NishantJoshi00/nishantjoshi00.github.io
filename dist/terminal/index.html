@@ -813,7 +813,11 @@
             if (text.includes('##CLEAR##')) {
                 // Special token to clear the terminal
                 outputDiv.innerHTML = '';
-            } else {
+            } else if (text.includes('##EXIT##')) {
+                // redirect to `/` we are currently on `/terminal`
+                window.location.href = '/';
+            }
+            else {
                 outputDiv.innerHTML += processedText.replace(/\n/g, '<br>');
                 
                 // Random CRT glitch effect occasionally

@@ -136,13 +136,14 @@ pub extern "C" fn processCommand(cmd_ptr: *const c_char) {
             print_output("  pwd          - Print working directory\n");
             print_output("  ls [path]    - List directory contents\n");
             print_output("  cd [path]    - Change directory\n");
-            print_output("  mkdir [path] - Create directory\n");
-            print_output("  touch [path] - Create empty file\n");
             print_output("  exit         - Exit the terminal\n");
             print_output("\n");
         }
         "clear" => {
             print_output("##CLEAR##");
+        }
+        "exit" => {
+            print_output("##EXIT##");
         }
         "echo" => {
             print_output(&format!("{}\n", args));
