@@ -9,11 +9,7 @@
     <div>
     <h2>Nishant Joshi</h2>
     <span>
-        <a href="#about">/about</a> 
-        | <a href="#projects">/projects</a> 
-        | <a href="#skills">/skills</a> 
-        | <a href="#contact">/contact</a> 
-        | <a href="/terminal">/terminal</a> 
+        <a href="/terminal">/terminal</a> 
     </span>
     <hr>
     <p>"A pile of rocks ceases to be a rock pile when somebody contemplates it with the idea of a cathedral in mind."</p>
@@ -39,6 +35,7 @@
         I like discovering new cuisines and trying out new recipes. A cup of coffee with the right person, and I can talk about anything.
         </p>
     </div>
+
     <div id="projects">
         <h3>Projects</h3>
         <div>
@@ -55,24 +52,59 @@
         </div>
         <!-- Add more projects as needed -->
     </div>
-    <div id="skills">
-        <h3>Skills</h3>
-        <ul>
-            <li>Turn ideas to reality</li>
-            <li>Build things that last</li>
-            <li>If it exists, I'll probably know it</li>
-        </ul>
-    </div>
-    <div id="contact">
-        <h3>Contact</h3>
-        <p>Email: nishantjosh@pm.me</p>
-        <p>LinkedIn: <a href="https://www.linkedin.com/in/joshi-nishant/">LinkedIn Profile</a></p>
-        <p>GitHub: <a href="https://github.com/NishantJoshi00">GitHub Profile</a></p>
-    </div>
-    </div>
+
+    <table>
+        <td>
+            <div id="skills">
+                <h3>Skills</h3>
+                <ul>
+                    <li>Writing Code</li>
+                    <li>Designing Systems</li>
+                    <li>Debugging</li>
+                </ul>
+            </div>
+        </td>
+        <td>
+            <div id="contact">
+                <h3>Contact</h3>
+                <ul>
+                    <li>
+                        <a href="mailto:nishantjosh@pm.me">Email Me</a>
+                        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+                        <i id="icn" class="fa-regular fa-clipboard" onclick="copyLink()" style="cursor:pointer; margin-left:5px;" title="Copy link to clipboard"></i>
+                    </li>
+                    <li><a href="https://www.linkedin.com/in/joshi-nishant/">LinkedIn Profile</a></li>
+                    <li><a href="https://github.com/NishantJoshi00">GitHub Profile</a></li>
+                </ul>
+
+                <script>
+                function copyLink() {
+                  navigator.clipboard.writeText("nishantjosh@pm.me")
+                    .then(() => {
+                      // Visual feedback
+                      const copyIcon = document.getElementById('icn');
+                      copyIcon.classList.replace('fa-clipboard', 'fa-check-double');
+                      copyIcon.classList.replace('fa-regular', 'fa-solid');
+                      
+                      // Vibration feedback for mobile
+                      if (navigator.vibrate) {
+                        navigator.vibrate(50);
+                      }
+                      
+                      // Reset after 1 second
+                      setTimeout(() => {
+                        copyIcon.classList.replace('fa-check-double', 'fa-clipboard');
+                        copyIcon.classList.replace('fa-solid', 'fa-regular');
+                      }, 1000);
+                    });
+                }
+                </script>
+            </div>
+        </td>
+    </table>
+    
 
     <footer>
-        <hr>
         <p>Page loaded in <span id="loadTime"></span>ms</p>
         <p>© 2025 Nishant Joshi</p>
     </footer>
