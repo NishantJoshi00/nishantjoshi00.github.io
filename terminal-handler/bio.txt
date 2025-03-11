@@ -1,0 +1,12 @@
+Nishant Joshi
+
+Occupation  : Software Developer
+Age         : 24
+Country     : India
+Hobbies     : Programming, Reading, Skating, Badminton, Chess
+Languages   : English, Hindi, Marathi
+
+Experiences:
+- Software Developer @ Juspay   - 2 years and more
+- Software Developer @ VWO      - 4 months
+- Software Developer @ School   - 7 years

@@ -36,6 +36,7 @@ fn print_output(output: &str) {
     }
 }
 
+mod utils;
 mod vfs;
 use vfs::VirtualFS;
 
@@ -136,6 +137,9 @@ pub extern "C" fn processCommand(cmd_ptr: *const c_char) {
             print_output("  pwd          - Print working directory\n");
             print_output("  ls [path]    - List directory contents\n");
             print_output("  cd [path]    - Change directory\n");
+            print_output("  cat [file]   - Display file contents\n");
+            print_output("  icat [file]  - Display image\n");
+            print_output("  whoami       - Display user information\n");
             print_output("  exit         - Exit the terminal\n");
             print_output("\n");
         }
@@ -172,11 +176,26 @@ pub extern "C" fn processCommand(cmd_ptr: *const c_char) {
                     for line in it {
                         print_output(&format!("{}\n", line));
                     }
-                },
+                }
                 None => {
                     print_output(&format!("cat: {}: No such file or directory\n", path));
-                },
+                }
             }
+        }
+        "icat" => {
+            let fs = get_fs();
+            let path = args.trim();
+            match fs.icat_file(path) {
+                Some(p) => {
+                    print_output(&format!("##ICAT:fs/{}##\n", p));
+                }
+                None => {
+                    print_output(&format!("icat: {}: No such file or directory\n", path));
+                }
+            }
+        }
+        "whoami" => {
+            utils::bio().for_each(|x| print_output(&x));
         }
         _ => {
             print_output(&format!("Unknown command: {}\n", command));

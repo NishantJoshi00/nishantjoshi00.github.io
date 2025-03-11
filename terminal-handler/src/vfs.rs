@@ -47,6 +47,21 @@ impl VirtualFS {
         }
     }
 
+    fn is_file(&self, path: &str) -> bool {
+        let output = self.files.keys().find(|f| *f == path);
+        output.is_some()
+    }
+
+    pub fn icat_file(&self, path: &str) -> Option<String> {
+        let path = self.normalize_path(path);
+        Some(
+            self.is_file(&path)
+                .then(|| path)?
+                .strip_prefix(super::HOME)?
+                .to_string(),
+        )
+    }
+
     pub fn list_dir(&self, path: &str) -> Vec<String> {
         let path = self.normalize_path(path);
 

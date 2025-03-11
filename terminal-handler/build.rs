@@ -31,7 +31,13 @@ impl PackedFs {
                     dirs.push(path);
                 } else {
                     let name = path.strip_prefix(FS).unwrap().to_str().unwrap().to_string();
-                    let data = std::fs::read(path).unwrap();
+                    let extension = path.extension().unwrap().to_str().unwrap();
+                    let data = match extension {
+                        "png" | "jpg" | "jpeg" => {
+                            vec![]
+                        }
+                        _ => std::fs::read(path).unwrap(),
+                    };
                     files.push((name, data));
                 }
             }

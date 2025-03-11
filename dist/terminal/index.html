@@ -816,6 +816,20 @@
             } else if (text.includes('##EXIT##')) {
                 // redirect to `/` we are currently on `/terminal`
                 window.location.href = '/';
+            } else if (text.includes("##ICAT:")) {
+                const img_url = "/" + text.split('##ICAT:')[1].trim().split("##")[0].trim();
+
+                // Special token to display an image
+                const img = document.createElement('img');
+                img.src = img_url
+                img.style.width = '75%'; // Limit to 75% of screen width
+                img.style.height = 'auto';
+                img.style.margin = '10px auto'; // Center the image horizontally
+                img.style.display = 'block'; // Required for margin auto to work
+                img.style.filter = 'sepia(0.6) hue-rotate(5deg) saturate(1.5) brightness(0.9) contrast(1.1)';
+                img.style.boxShadow = 'inset 0 0 10px rgba(255, 176, 0, 0.3)';
+                img.style.opacity = '0.95';
+                outputDiv.appendChild(img);
             }
             else {
                 outputDiv.innerHTML += processedText.replace(/\n/g, '<br>');
