@@ -839,6 +839,38 @@
             
             terminal.scrollTop = terminal.scrollHeight;
         }
+
+
+        function processCommandModern(command) {
+            // Check if WASM is available
+            if (!wasmInstance) {
+                appendOutput("WASM module not loaded. Command processing is limited.\n");
+                appendOutput("Try again later or refresh the page.\n");
+                return;
+            }
+        
+            try {
+                // Modern approach - direct string passing if the function exists
+                if (typeof wasmInstance.exports.process_command === 'function') {
+                    wasmInstance.exports.process_command(command);
+                } else {
+                    // Fallback to the original approach
+                    const commandBuffer = stringToUint8Array(command);
+                    const ptr = wasmInstance.exports.allocateMemory(commandBuffer.length + 1);
+                    
+                    const memory = new Uint8Array(wasmMemory.buffer);
+                    memory.set(commandBuffer, ptr);
+                    memory[ptr + commandBuffer.length] = 0; // Null terminator
+                    
+                    wasmInstance.exports.processCommand(ptr);
+                    
+                    wasmInstance.exports.freeMemory(ptr);
+                }
+            } catch (error) {
+                appendOutput(`Error processing command: ${error.message}\n`);
+                appendOutput("The WASM module might not be fully initialized.\n");
+            }
+        }
         
         // Process commands using WASM
         function processCommand(command) {
@@ -848,22 +880,10 @@
                 appendOutput("Try again later or refresh the page.\n");
                 return;
             }
-
+        
             try {
-                // Allocate memory for the command string
-                const commandBuffer = stringToUint8Array(command);
-                const ptr = wasmInstance.exports.allocateMemory(commandBuffer.length + 1);
-                
-                // Copy the string to WASM memory
-                const memory = new Uint8Array(wasmMemory.buffer);
-                memory.set(commandBuffer, ptr);
-                memory[ptr + commandBuffer.length] = 0; // Null terminator
-                
-                // Process the command
-                wasmInstance.exports.processCommand(ptr);
-                
-                // Free the allocated memory
-                wasmInstance.exports.freeMemory(ptr);
+                // Use the modern approach instead of the original code
+                processCommandModern(command);
             } catch (error) {
                 appendOutput(`Error processing command: ${error.message}\n`);
                 appendOutput("The WASM module might not be fully initialized.\n");
