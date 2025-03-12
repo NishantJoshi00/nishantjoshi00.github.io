@@ -27,12 +27,26 @@ fn initialize_fs_structure(files: &mut HashMap<String, Vec<String>>) {
 #[link(wasm_import_module = "env")]
 extern "C" {
     fn printToConsole(ptr: *const u8, len: usize);
+    fn msgHistory();
+    fn sendMessage(ptr: *const u8, len: usize);
 }
 
 // Helper function to print output
 fn print_output(output: &str) {
     unsafe {
         printToConsole(output.as_ptr(), output.len());
+    }
+}
+
+fn print_msg_history() {
+    unsafe {
+        msgHistory();
+    }
+}
+
+fn send_message(msg: &str) {
+    unsafe {
+        sendMessage(msg.as_ptr(), msg.len());
     }
 }
 
@@ -131,16 +145,18 @@ pub extern "C" fn processCommand(cmd_ptr: *const c_char) {
     match command.as_str() {
         "help" => {
             print_output("\nAvailable commands:\n");
-            print_output("  help         - Show this help message\n");
+            print_output("  cat [file]   - Display file contents\n");
+            print_output("  cd [path]    - Change directory\n");
             print_output("  clear        - Clear the terminal screen\n");
             print_output("  echo [text]  - Display text\n");
-            print_output("  pwd          - Print working directory\n");
-            print_output("  ls [path]    - List directory contents\n");
-            print_output("  cd [path]    - Change directory\n");
-            print_output("  cat [file]   - Display file contents\n");
-            print_output("  icat [file]  - Display image\n");
-            print_output("  whoami       - Display user information\n");
             print_output("  exit         - Exit the terminal\n");
+            print_output("  help         - Show this help message\n");
+            print_output("  icat [file]  - Display image\n");
+            print_output("  ls [path]    - List directory contents\n");
+            print_output("  msg list     - List message history\n");
+            print_output("  msg send [text] - Send a message\n");
+            print_output("  pwd          - Print working directory\n");
+            print_output("  whoami       - Display user information\n");
             print_output("\n");
         }
         "clear" => {
@@ -196,6 +212,16 @@ pub extern "C" fn processCommand(cmd_ptr: *const c_char) {
         }
         "whoami" => {
             utils::bio().for_each(|x| print_output(&x));
+        }
+        "msg" => {
+            // split args at the first space
+            let parts: Vec<&str> = args.splitn(2, ' ').collect();
+            let msg = parts.get(1).unwrap_or(&"").to_string();
+            match parts[0] {
+                "send" => send_message(&msg),
+                "list" => print_msg_history(),
+                _ => print_output("Unknown message command\n"),
+            }
         }
         _ => {
             print_output(&format!("Unknown command: {}\n", command));
